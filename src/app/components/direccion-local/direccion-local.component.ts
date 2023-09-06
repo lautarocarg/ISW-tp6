@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Direccion , Ciudades } from 'src/app/models/direccion';
 
 @Component({
   selector: 'app-direccion-local',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./direccion-local.component.css']
 })
 export class DireccionLocalComponent {
+
+  ItemCiudad = Ciudades;
 
 }

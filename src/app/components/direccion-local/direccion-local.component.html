@@ -1,1 +1,48 @@
-<p>direccion-local works!</p>
+<div class="container">
+  <h3 class="" >Dirección del envio</h3>
+  <hr>
+  <form>
+    <!--Fila calle y numero-->
+      <div class="row g-3 align-items-left">
+          <!-- campo CALLE -->
+          <div class="col">
+            <div class="form-group">
+              <label class="col-form-label" for="calle"> Calle<span class="text-danger">*</span>: </label>
+              <input type="text" class="form-control" formControlName="Calle" placeholder="Calle" name="calle" id="calle">
+              </div>
+            </div>
+
+          <!-- campo NUMERO -->
+          <div class="col">
+            <div class="form-group">
+              <label class="col-form-label" for="numero"> Número<span class="text-danger">*</span>: </label>
+              <input type="number" class="form-control"
+              formControlName="Numero"  placeholder="Numero" name="numero" id="numero" required>
+            </div>
+        </div>
+      </div>
+
+      <div class="row full-width">
+          <!-- campo CIUDAD -->
+          <div class="form-group col-md-6">
+              <label class="etiqueta-campo" for="ciudad"> Ciudad<span
+                  class="text-danger">*</span>: </label>
+              <select class="form-control" formControlName="Ciudad" name="ciudad" id="ciudad" >
+                  <option [value]="ciudad.Nombre" *ngFor="let ciudad of ItemCiudad">{{ciudad.Nombre}}</option>
+              </select>
+          </div>
+
+          <!-- campo REFERENCIA -->
+          <div class="form-group col-md-6">
+              <label class="" for="referencia"> Referencia (Opcional) </label>
+              <textarea class="form-control"
+              formControlName="Referencia"  placeholder="Referencia" name="referencia" id="referencia" rows="4" cols="50" resize="none"></textarea>
+          </div>
+      </div>
+    </form>
+  <div class="row justify-content-end">
+      <button class="btn" type="submit" id="siguiente">Siguiente</button>
+  </div>
+</div>
+
+
