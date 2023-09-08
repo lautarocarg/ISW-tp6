@@ -1,7 +1,7 @@
 <div class="container text-center">
   <h3>Detalles del Pedido</h3>
   <hr>
-  <form class="row g-2">
+  <form [formGroup]="FormPedido" class="row g-2">
     <div class="col-4 text-area">
       <label for="exampleFormControlTextarea1" class="col-form-label">Ingrese los productos que desea comprar</label>
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" maxlength="1000"></textarea>
@@ -15,7 +15,7 @@
   </form>
   <h3>Dirección del local</h3>
   <hr>
-  <form>
+  <form [formGroup]="FormDireccionLocal">
     <!--Fila calle y numero-->
       <div class="row g-3 align-items-left">
           <!-- campo CALLE -->

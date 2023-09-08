@@ -1,1 +1,39 @@
-<p>entrega works!</p>
+<div class="container">
+  <h3 class="titulo-plantilla text-dark" >Fecha de entrega</h3>
+  <hr>
+
+  <form name="FormTipoEntrega"  class="container" >
+      <!-- campo FORMA DE ENTREGA -->
+      <div class="form-group row">
+          <label class="etiqueta-campo" for="formaEntrega"> Forma de Entrega <span class="text-danger">*</span>: </label>
+          <select class="form-control" formControlName="Forma" name="formaEntrega" id="formaEntrega"
+              >
+              <option value="loAntesPosible">Lo antes posible</option>
+              <option value="fechaYhora">Elegir fecha y hora</option>
+          </select>
+      </div>
+  </form>
+
+  <!-- campo FECHA Y HORA -->
+  <form class="tarjeta">
+      <div class="container justify-content-center full-width" *ngIf="seleccionForma == 'fechaYhora'">
+          <div class="row form-group">
+              <!--campo FECHA-->
+              <div class="col-md-6">
+                  <label class="etiqueta-campo row" for="Fecha"> Fecha de Entrega <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control row" formControlName="Fecha" placeholder="DD/MM/AAAA"
+                      >
+                  <div class="text-danger" *ngIf="errorDeRequerido('Fecha')">Dato Requerido.</div>
+              </div>
+
+              <!--campo HORA-->
+              <div class="col-md-6">
+                  <label class="etiqueta-campo row" for="Hora">Hora de Entrega<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control row" formControlName="Hora" placeholder="HH:MM"
+                      >
+                  <div class="text-danger" *ngIf="validezCampo('Hora')">Dato Requerido.</div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>

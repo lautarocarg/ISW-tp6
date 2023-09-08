@@ -11,6 +11,7 @@ import { MedioDePagoComponent } from './components/medio-de-pago/medio-de-pago.c
 import { EntregaComponent } from './components/entrega/entrega.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { BtnNavegacionComponent } from './components/btn-navegacion/btn-navegacion.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { BtnNavegacionComponent } from './components/btn-navegacion/btn-navegaci
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

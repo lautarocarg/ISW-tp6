@@ -1,3 +1,85 @@
+<div class="container">
+  <!--Listo-->
+  <div class="container text-center p-4">
+    <div class="row">
+      <div class="col">
+      <button class="col btn btn-primary" (click)="seleccionarMedioDePago('Efectivo')">
+        Efectivo
+      </button>
+    </div>
+      <div class="col">
+      <button class="col btn btn-secondary" (click)="seleccionarMedioDePago('Tarjeta')">
+          Tarjeta de Crédito/Débito
+      </button>
+    </div>
+    </div>
+  </div>
+
+   <!-- Efectivo -->
+  <div class="container">
+      <form [formGroup]="FormTipoEfectivo" name="FormPagoEfectivo"  *ngIf="medioDePago == 'Efectivo'">
+        <div class="mb-3">
+        <label class="form-label" for="Monto"> ¿Con cuánto vas a pagar? </label>
+          <input class="form-control" type="number" formControlName="Monto" placeholder="Monto" name="Monto" id="Monto">
+        </div>
+      </form>
+
+      <!-- Tarjeta -->
+      <form [formGroup]="FormTipoTarjeta" name="FormRegistroTarjeta" *ngIf="medioDePago == 'Tarjeta'">
+          <div  class="container text-left">
+              <!--campo NOMBRE Y APELLIDO [FUNCIONA]-->
+              <div class="row form-group">
+                  <label class="col-form-label" for="NombreApellido"> Nombre y Apellido <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control col-md-12 input-lg" name="NombreApellido" id="NombreApellido"
+                      [ngClass]="validezCampo('NombreApellido')">
+                  <div class="text-danger" *ngIf="errorDeRequerido('NombreApellido')">Dato Requerido.</div>
+              </div>
+              <!--campo NUMERO DE TARJETA-->
+              <div class="row form-group">
+                  <label class="etiqueta-campo col-form-label" for="NumeroTarjeta"> Numero de Tarjeta <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control col-md-12 input-lg" formControlName="NumeroTarjeta"
+                      [ngClass]="validezCampo('NumeroTarjeta')">
+
+                  <div class="text-danger"
+                      *ngIf="errorDeRequerido('NumeroTarjeta')">Dato Requerido.</div>
+
+                  <div class="text-danger"
+                      *ngIf="errorDePatron('NumeroTarjeta') || luhnAlgorithm('NumeroTarjeta')">Tarjeta inválida: Deber 16 dígitos sin espacios </div>
+              </div>
+
+              <!--campo VENCIMIENTO y CVC-->
+              <div class="row form-group">
+                  <div class="row full-width">
+                      <!--campo Vencimiento-->
+                      <div class="col-sm-6">
+                          <label class="etiqueta-campo col-form-label col-sm-12" for="Vencimiento">Vencimiento <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control input-lg" formControlName="Vencimiento"
+                              [ngClass]="validezCampo('Vencimiento')"/>
+
+                          <div class="text-danger"
+                              *ngIf="errorDeRequerido('Vencimiento')">Dato Requerido.</div>
+                          <div class="text-danger"
+                              *ngIf="errorDePatron('Vencimiento')">Formato MM/AA </div>
+                      </div>
+                      <!--campo CVC-->
+                      <div class="col-md-6">
+                          <label class="etiqueta-campo col-form-label" for="CodigoSeguridad">Codigo de Seguridad <span class="text-danger">*</span></label>
+
+                          <input type="number" class="form-control  input-lg" formControlName="CodigoSeguridad"
+                              [ngClass]="validezCampo('CodigoSeguridad')">
+
+                          <div class="text-danger"
+                              *ngIf="errorDeRequerido('CodigoSeguridad')">Dato Requerido.</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+
+
+
 <div class="row justify-content-end">
   <div class="col">
     <app-btn-navegacion [buttonText]="'Atras'" [routerLink]="'/resumen'"></app-btn-navegacion>
