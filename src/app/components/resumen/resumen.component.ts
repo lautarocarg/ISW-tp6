@@ -10,12 +10,4 @@ import { Router } from '@angular/router';
 export class ResumenComponent {
   constructor(private router: Router) {}
 
-  siguiente(){
-    this.router.navigate(['/medio-de-pago']);
-  }
-
-  atras(){
-    this.router.navigate(['/direccion-local']);
-  }
-
 }

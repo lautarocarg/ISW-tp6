@@ -1,5 +1,5 @@
 <div class="container">
-  <h3 class="" >Dirección del envio</h3>
+  <h3>Dirección del envio</h3>
   <hr>
   <form>
     <!--Fila calle y numero-->
@@ -40,12 +40,17 @@
           </div>
       </div>
     </form>
+    <div class="row mapa" >
+      <div class="col">
+        <button>MAPA</button>
+      </div>
+    </div>
   <div class="row justify-content-end">
     <div class="col">
-      <button class="btn" (click)="atras()">atras</button>
+      <app-btn-navegacion [buttonText]="'Atras'" [routerLink]="'/'"></app-btn-navegacion>
     </div>
     <div class="col">
-      <button class="btn" type="submit" id="siguiente"  (click)="siguiente()" >Siguiente</button>
+      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/resumen'"></app-btn-navegacion>
     </div>
   </div>
 </div>

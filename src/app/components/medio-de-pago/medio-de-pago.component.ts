@@ -11,12 +11,4 @@ export class MedioDePagoComponent {
 
   constructor(private router: Router) {}
 
-  siguiente(){
-    this.router.navigate(['/entrega']);
-  }
-
-  atras(){
-    this.router.navigate(['/resumen']);
-  }
-
 }

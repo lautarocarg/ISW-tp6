@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Direccion , Ciudades } from 'src/app/models/direccion';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,9 +11,6 @@ export class PedidoComponent {
 
   constructor(private router: Router) {}
 
-
-  siguiente(){
-    this.router.navigate(['/direccion-local']);
-  }
+  ItemCiudad = Ciudades;
 
 }

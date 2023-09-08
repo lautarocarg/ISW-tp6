@@ -1,0 +1,27 @@
+h3{
+    text-align: left;
+    padding: 20px 0 0 0;
+}
+
+.btn-primary{
+    background-color: #007bff;
+    color: #fff;
+}
+
+.imageUpload{
+    align-self: center;
+}
+
+.btn-mas{
+    padding-top: 20px;
+    align-self: center;
+    text-align: left;
+}
+
+.text-area{
+    text-align: left;
+}
+
+.mapa{
+    padding: 20px 0;
+}

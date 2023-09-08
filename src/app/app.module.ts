@@ -9,6 +9,9 @@ import { DireccionLocalComponent } from './components/direccion-local/direccion-
 import { ResumenComponent } from './components/resumen/resumen.component';
 import { MedioDePagoComponent } from './components/medio-de-pago/medio-de-pago.component';
 import { EntregaComponent } from './components/entrega/entrega.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { BtnNavegacionComponent } from './components/btn-navegacion/btn-navegacion.component';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { EntregaComponent } from './components/entrega/entrega.component';
     DireccionLocalComponent,
     ResumenComponent,
     MedioDePagoComponent,
-    EntregaComponent
+    EntregaComponent,
+    ImageUploadComponent,
+    BtnNavegacionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,21 @@
+.imageList{
+    text-align: left;
+    display: inline-block;
+}
+/* Estilos para el botón personalizado */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* Oculto el diseño del input por defecto */
+#fileInput {
+    display: none;
+}
+
+h6{
+    padding-top: 10px;
+}

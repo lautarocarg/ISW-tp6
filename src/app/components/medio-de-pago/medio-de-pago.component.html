@@ -1,8 +1,8 @@
 <div class="row justify-content-end">
   <div class="col">
-    <button class="btn" (click)="atras()">atras</button>
+    <app-btn-navegacion [buttonText]="'Atras'" [routerLink]="'/resumen'"></app-btn-navegacion>
   </div>
   <div class="col">
-    <button class="btn" type="submit" id="siguiente"  (click)="siguiente()" >Siguiente</button>
+    <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/entrega'"></app-btn-navegacion>
   </div>
 </div>

@@ -1,24 +1,67 @@
 <div class="container text-center">
+  <h3>Detalles del Pedido</h3>
+  <hr>
   <form class="row g-2">
-    <div class="col">
-      <label for="exampleFormControlTextarea1" class="col-form-label">Example textarea</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+    <div class="col-4 text-area">
+      <label for="exampleFormControlTextarea1" class="col-form-label">Ingrese los productos que desea comprar</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" maxlength="1000"></textarea>
     </div>
-    <div class="col">
-      <button type="button" class="btn btn-primary">Subir imagen</button>
+    <div class="col-3 btn-mas">
+      <button class="btn btn-primary"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
+    </div>
+    <div class="col-4 imageUpload">
+      <app-image-upload></app-image-upload>
     </div>
   </form>
-  <div class="row">
+  <h3>Dirección del local</h3>
+  <hr>
+  <form>
+    <!--Fila calle y numero-->
+      <div class="row g-3 align-items-left">
+          <!-- campo CALLE -->
+          <div class="col">
+            <div class="form-group">
+              <label class="col-form-label" for="calle"> Calle<span class="text-danger">*</span>: </label>
+              <input type="text" class="form-control" formControlName="Calle" placeholder="Calle" name="calle" id="calle">
+              </div>
+            </div>
+
+          <!-- campo NUMERO -->
+          <div class="col">
+            <div class="form-group">
+              <label class="col-form-label" for="numero"> Número<span class="text-danger">*</span>: </label>
+              <input type="number" class="form-control"
+              formControlName="Numero"  placeholder="Numero" name="numero" id="numero" required>
+            </div>
+        </div>
+      </div>
+
+      <div class="row full-width">
+          <!-- campo CIUDAD -->
+          <div class="form-group col-md-6">
+              <label class="etiqueta-campo" for="ciudad"> Ciudad<span
+                  class="text-danger">*</span>: </label>
+              <select class="form-control" formControlName="Ciudad" name="ciudad" id="ciudad" >
+                  <option [value]="ciudad.Nombre" *ngFor="let ciudad of ItemCiudad">{{ciudad.Nombre}}</option>
+              </select>
+          </div>
+
+          <!-- campo REFERENCIA -->
+          <div class="form-group col-md-6">
+              <label class="" for="referencia"> Referencia (Opcional) </label>
+              <textarea class="form-control"
+              formControlName="Referencia"  placeholder="Referencia" name="referencia" id="referencia" rows="4" cols="50" resize="none"></textarea>
+          </div>
+      </div>
+    </form>
+  <div class="row mapa">
     <div class="col">
-      Column
-    </div>
-    <div class="col">
-      Column
+      <button>MAPA</button>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <button class="btn" (click)="siguiente()">Siguiente</button>
+      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/direccion-local'"></app-btn-navegacion>
     </div>
   </div>
 </div>
