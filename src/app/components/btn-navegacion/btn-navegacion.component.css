@@ -1,19 +1,16 @@
 button{
-    background-color: rgb(190, 190, 248);
-    margin: 2%;
+    background-color: #EAEBED;
+    margin: 1vw;
 }
 
 button:hover{
-    background-color: rgb(124, 124, 234);
-    margin: 2%;
+    background-color: #006989;
 }
 
 .btn-siguiente{
-    padding-right: 20px;
-    text-align: end;
+    text-align: right;
 }
 
 .btn-atras{
-    padding-left: 20px;
     text-align: start;
 }

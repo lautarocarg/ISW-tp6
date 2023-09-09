@@ -2,20 +2,18 @@ h3{
     text-align: left;
     padding: 20px 0 0 0;
 }
+h6{
+    text-align: left;
+}
 
 .btn-primary{
-    background-color: #007bff;
+    background-color: #01A7C2;
+    border-color: #01A7C2;
     color: #fff;
 }
-
-.imageUpload{
-    align-self: center;
-}
-
-.btn-mas{
-    padding-top: 20px;
-    align-self: center;
-    text-align: left;
+.btn-primary:active{
+    background-color: #006989;
+    border-color: #006989;
 }
 
 .text-area{

@@ -17,6 +17,7 @@ export class ImageUploadComponent {
     this.archivosSubidos = false
     //Obtengo los datos del evento (el archivo)
     const files: FileList = event.target.files;
+    console.log(files)
     //Por cada imagen pongo su nombre en la lista para mostrar
     for (let i = 0; i < files.length; i++) {
       const file = files[i];

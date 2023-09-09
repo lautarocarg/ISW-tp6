@@ -26,7 +26,7 @@ export class PedidoComponent {
         Validators.pattern('[A-Z, a-z]{4,50}')]),
     Numero: new FormControl(null,
       [Validators.required,
-       Validators.pattern('[0-9]{1,5}')]),
+      Validators.pattern('[0-9]{1,5}')]),
     Ciudad: new FormControl(true, [Validators.required]),
     Referencia: new FormControl('', [Validators.pattern('[A-Z, a-z, 0-9]{1,100}')])
   })
