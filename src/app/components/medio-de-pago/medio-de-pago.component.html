@@ -22,6 +22,9 @@
         <label class="form-label" for="Monto"> ¿Con cuánto vas a pagar? </label>
           <input class="form-control" type="number" formControlName="Monto" placeholder="Monto" name="Monto" id="Monto">
         </div>
+        <div class="mb-6">
+          <p>Tu vuelto:</p>          
+        </div>
       </form>
 
       <!-- Tarjeta -->
@@ -82,7 +85,7 @@
 
 <div class="row justify-content-end">
   <div class="col">
-    <app-btn-navegacion [buttonText]="'Atras'" [routerLink]="'/resumen'"></app-btn-navegacion>
+    <app-btn-navegacion [buttonText]="'Atrás'" [routerLink]="'/resumen'"></app-btn-navegacion>
   </div>
   <div class="col">
     <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/entrega'"></app-btn-navegacion>

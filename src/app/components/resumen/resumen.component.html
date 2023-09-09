@@ -1,8 +1,21 @@
-<div class="row justify-content-end">
-  <div class="col">
-    <app-btn-navegacion [buttonText]="'Atras'" [routerLink]="'/direccion-local'"></app-btn-navegacion>
-  </div>
-  <div class="col">
-    <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/medio-de-pago'"></app-btn-navegacion>
+<div class="container rounded shadow">
+  <h1 class="display-4">Resumen del Pedido</h1>
+  <div class="section-divider mb-4"></div>
+
+  <h2>Tu Pedido</h2>
+  <div class="section-divider"></div>
+
+  <h2>Dirección del Local</h2>
+  <div class="section-divider"></div>
+
+  <h2>Dirección de Envío</h2>
+  
+  <div class="row justify-content-between mt-4">
+    <div class="col-4">
+      <app-btn-navegacion [buttonText]="'Atrás'" [routerLink]="'/direccion-local'"></app-btn-navegacion>
+    </div>
+    <div class="col-4 text-right">
+      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/medio-de-pago'"></app-btn-navegacion>
+    </div>
   </div>
 </div>

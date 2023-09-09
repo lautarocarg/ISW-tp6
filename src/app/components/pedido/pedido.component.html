@@ -5,16 +5,33 @@
   <form [formGroup]="FormPedido" class="row g-2">
     <div class="col-4 align-self-start text-area">
       
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" maxlength="1000"></textarea>
+      <textarea class="form-control" id="descripcionPedido" rows="2" maxlength="1000"></textarea>
     </div>
-    <div class="col-2 align-self-start me-auto btn-mas">
-      <button class="btn btn-primary"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
+    <div class="col-2 align-self-start me-auto">
+      <button (click)="agregarPedido()" class="btn btn-primary"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
     </div>
-    <div class="col-3 align-self-start me-auto imageUpload">
+    <div class="col-3 align-self-start me-auto">
       <app-image-upload></app-image-upload>
     </div>
-    
   </form>
+  <div class="row" [ngClass]="{'tabla-pedidos-mostrar': flagTablaPedidos === true}">
+    <div class="col-4">
+      <table class="tabla-pedidos">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Cantidad de Imágenes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of Pedidos">
+            <td>{{ pedido.Descripcion }}</td>
+            <td>{{ pedido.Imagenes.length }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <h3>Dirección del local</h3>
   <hr>
   <form [formGroup]="FormDireccionLocal">
@@ -63,7 +80,7 @@
   </div>
   <div class="row ">
     <div class="col">
-      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/direccion-local'"></app-btn-navegacion>
+      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/direccion-local'" [datosFormulario]="datosFormulario"></app-btn-navegacion>
     </div>
   </div>
 </div>

@@ -11,14 +11,30 @@ export class MedioDePagoComponent {
 
   constructor(private router: Router) {}
 
+  precioPedido: number = 1000; // Reemplaza 1000 con el precio real del pedido
   medioDePago: string = 'Efectivo';
   submitted = false;
 
   @Output() estado = new EventEmitter<string>();
-  @Output() info = new EventEmitter();
+  @Output() info = new EventEmitter<{ Vuelto: number }>();
 
   seleccionarMedioDePago(medioDePago: string){
     this.medioDePago = medioDePago;
+  }
+/*
+   verCambiosEnElMonto() {
+    this.FormTipoEfectivo.get('Monto')?.valueChanges.subscribe((monto) => {
+      if (this.medioDePago === 'Efectivo' && this.FormTipoEfectivo.valid) {
+        const vuelto = this.calcularVuelto(monto);
+
+        // Emitir el vuelto como un objeto
+        this.info.emit({ Vuelto: vuelto });
+      }
+    });
+  }
+*/
+  calcularVuelto(montoPago: number): number {
+    return montoPago - this.precioPedido;
   }
 
   siguiente(){

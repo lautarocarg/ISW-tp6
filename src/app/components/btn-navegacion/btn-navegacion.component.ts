@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute  } from '@angular/router';
 
 @Component({
   selector: 'app-btn-navegacion',
@@ -9,11 +9,15 @@ import { Router } from '@angular/router';
 export class BtnNavegacionComponent {
   @Input() buttonText: string = "";
   @Input() routerLink: string = "";
+  @Input() datosFormulario: any; 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  navigateTo(event: Event) {
-    this.router.navigate([this.routerLink]);
+  navigateTo() {
+    this.router.navigate([this.routerLink], {
+      relativeTo: this.route,
+      queryParams: { datos: JSON.stringify(this.datosFormulario) }
+    });
   }
 
 }
