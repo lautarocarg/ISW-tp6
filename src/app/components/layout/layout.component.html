@@ -7,6 +7,10 @@
     <span style="font-size: 54px; color: #01A7C2; font-weight: bold;"></span>
   </h1>
   <div class="wrapper">
-    <router-outlet></router-outlet>
-</div>
+    <app-pedido *ngIf="estado === 1" (cambioEstado)="onCambioEstado($event)" (pedidoCreado)="onPedidoCreado($event)"></app-pedido>
+    <app-direccion-envio *ngIf="estado === 2" (cambioEstado)="onCambioEstado($event)" (direccionEnvioCreada)="onDireccionEnvioCreada($event)"></app-direccion-envio>
+    <app-resumen [pedidos]="pedido" [direccionEnvio]="direccionEnvio" [direccionPedido]="direccionPedido" *ngIf="estado === 3" (cambioEstado)="onCambioEstado($event)"></app-resumen>
+    <app-medio-de-pago *ngIf="estado === 4" (cambioEstado)="onCambioEstado($event)"></app-medio-de-pago>
+    <app-entrega *ngIf="estado === 5" (cambioEstado)="onCambioEstado($event)"></app-entrega>
+  </div>
 </div>

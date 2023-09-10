@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Estados } from 'src/app/models/estados.enum';
+import { Pedido } from 'src/app/models/pedido';
+import { Direccion } from 'src/app/models/direccion';
+import { PedidoYDireccion } from 'src/app/models/pedidoYDireccion';
 
 @Component({
   selector: 'app-layout',
@@ -6,5 +10,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
+  
+  estado:Estados = Estados.Pedido;
+  pedido:Pedido[];
+  direccionPedido:Direccion;
+  direccionEnvio:Direccion;
+  
+  onPedidoCreado(pedidoYDireccion: PedidoYDireccion) {
+    this.pedido = pedidoYDireccion.pedido;
+    this.direccionPedido = pedidoYDireccion.direccion;
+  }
+
+  onCambioEstado(estado:Estados){
+    this.estado = estado
+  }
+
+  onDireccionEnvioCreada(direccionEnvio: Direccion) {
+    this.direccionEnvio = direccionEnvio
+    console.log(this.direccionEnvio)
+    console.log(this.pedido)
+    console.log(this.direccionPedido)
+  }
 
 }

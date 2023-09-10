@@ -47,11 +47,11 @@
     </div>
     
   <div class="row justify-content-between">
-    <div class="col-2">
-      <app-btn-navegacion [buttonText]="'Atrás'" [routerLink]="'/'"></app-btn-navegacion>
+    <div class="col btn-atras">
+      <button (click)="volverAlPedido()" class="btn btn-nav">Atrás</button>
     </div>
-    <div class="col-5">
-      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/resumen'"></app-btn-navegacion>
+    <div class="col btn-siguiente">
+      <button (click)="enviarFormulario()" class="btn btn-nav">Siguiente</button>
     </div>
   </div>
 </div>

@@ -84,10 +84,10 @@
 
 
 <div class="row justify-content-end">
-  <div class="col">
-    <app-btn-navegacion [buttonText]="'Atrás'" [routerLink]="'/resumen'"></app-btn-navegacion>
+  <div class="col btn-atras">
+    <button (click)="volverAResumen()" class="btn btn-nav">Atrás</button>
   </div>
-  <div class="col">
-    <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/entrega'"></app-btn-navegacion>
+  <div class="col btn-siguiente">
+    <button (click)="confirmarMedioDePago()" class="btn btn-nav">Siguiente</button>
   </div>
 </div>

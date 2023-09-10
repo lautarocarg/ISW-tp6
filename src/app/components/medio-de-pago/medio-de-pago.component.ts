@@ -1,6 +1,6 @@
 import { Component , OnInit, Output, EventEmitter} from '@angular/core';
-import { Router } from '@angular/router';
 import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
+import { Estados } from 'src/app/models/estados.enum';
 
 @Component({
   selector: 'app-medio-de-pago',
@@ -9,7 +9,16 @@ import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/form
 })
 export class MedioDePagoComponent {
 
-  constructor(private router: Router) {}
+  @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
+
+
+  confirmarMedioDePago(){
+    this.cambioEstado.emit(Estados.Entrega);
+  }
+
+  volverAResumen(){
+    this.cambioEstado.emit(Estados.Resumen);
+  }
 
   precioPedido: number = 1000; // Reemplaza 1000 con el precio real del pedido
   medioDePago: string = 'Efectivo';
@@ -21,18 +30,7 @@ export class MedioDePagoComponent {
   seleccionarMedioDePago(medioDePago: string){
     this.medioDePago = medioDePago;
   }
-/*
-   verCambiosEnElMonto() {
-    this.FormTipoEfectivo.get('Monto')?.valueChanges.subscribe((monto) => {
-      if (this.medioDePago === 'Efectivo' && this.FormTipoEfectivo.valid) {
-        const vuelto = this.calcularVuelto(monto);
 
-        // Emitir el vuelto como un objeto
-        this.info.emit({ Vuelto: vuelto });
-      }
-    });
-  }
-*/
   calcularVuelto(montoPago: number): number {
     return montoPago - this.precioPedido;
   }

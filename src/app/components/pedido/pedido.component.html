@@ -11,7 +11,7 @@
       <button (click)="agregarPedido()" class="btn btn-primary"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
     </div>
     <div class="col-3 align-self-start me-auto">
-      <app-image-upload></app-image-upload>
+      <app-image-upload (imagenesCargadas)="onImagenesCargadas($event)"></app-image-upload>
     </div>
   </form>
   <div class="row" [ngClass]="{'tabla-pedidos-mostrar': flagTablaPedidos === true}">
@@ -79,8 +79,8 @@
     </div>
   </div>
   <div class="row ">
-    <div class="col">
-      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/direccion-local'" [datosFormulario]="datosFormulario"></app-btn-navegacion>
+    <div class="col btn-siguiente">
+      <button (click)="enviarFormulario()" class="btn btn-nav">Siguiente</button>
     </div>
   </div>
 </div>

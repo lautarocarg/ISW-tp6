@@ -12,3 +12,79 @@ body {
   background-color: #006989;
   font-family: 'Montserrat', sans-serif;
 }
+
+.btn-nav{
+  background-color: #EAEBED;
+}
+
+button:hover{
+  background-color: #006989 !important;
+}
+
+.btn-siguiente{
+  text-align: right;
+}
+
+.btn-atras{
+  text-align: start;
+}
+
+.btn-primary{
+  background-color: #01A7C2;
+  border-color: #01A7C2;
+  color: #fff;
+}
+.btn-primary:active{
+  background-color: #006989;
+  border-color: #006989;
+}
+.btn-primary:hover{
+  background-color: #006989;
+  border-color: #006989;
+}
+
+h3{
+  text-align: left;
+  padding: 20px 0 0 0;
+}
+h2{
+  text-align: left;
+  padding: 20px 0 0 0;
+}
+h6{
+  text-align: left;
+}
+
+.text-area{
+  text-align: left;
+}
+
+.mapa{
+  padding: 20px 0;
+}
+
+.tabla-pedidos-mostrar{
+  display: none;
+}
+
+.tabla-pedidos {
+  width: 100%; 
+  border-collapse: collapse; 
+  margin-bottom: 20px; 
+}
+
+.tabla-pedidos th {
+  background-color: #f2f2f2;
+  text-align: center; 
+  padding: 10px; 
+  border: 1px solid #ddd; 
+}
+
+.tabla-pedidos td {
+  padding: 8px; 
+  border: 1px solid #ddd;
+}
+
+.tabla-pedidos tbody tr:nth-child(even) {
+  background-color: #f7f7f7;
+}

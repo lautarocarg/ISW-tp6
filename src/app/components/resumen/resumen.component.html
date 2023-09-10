@@ -1,21 +1,84 @@
-<div class="container rounded shadow">
-  <h1 class="display-4">Resumen del Pedido</h1>
-  <div class="section-divider mb-4"></div>
+<div class="container">
+  <h1>Resumen del Pedido</h1>
+  <hr>
 
   <h2>Tu Pedido</h2>
-  <div class="section-divider"></div>
+  <hr>
+  <div class="row">
+    <div class="col-6">
+      <table class="tabla-pedidos">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Cantidad de Imágenes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidos">
+            <td>{{ pedido.Descripcion }}</td>
+            <td>{{ pedido.Imagenes.length }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <h2>Dirección del Local</h2>
-  <div class="section-divider"></div>
+  <hr>
+  <div class="row">
+    <div class="col-6">
+      <table class="tabla-pedidos">
+        <thead>
+          <tr>
+            <th>Calle</th>
+            <th>Número</th>
+            <th>Ciudad</th>
+            <th>Referencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ direccionPedido.Calle }}</td>
+            <td>{{ direccionPedido.Numero }}</td>
+            <td>{{ direccionPedido.Ciudad }}</td>
+            <td>{{ direccionPedido.Referencia }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <h2>Dirección de Envío</h2>
-  
-  <div class="row justify-content-between mt-4">
-    <div class="col-4">
-      <app-btn-navegacion [buttonText]="'Atrás'" [routerLink]="'/direccion-local'"></app-btn-navegacion>
+  <hr>
+  <div class="row">
+    <div class="col-6">
+      <table class="tabla-pedidos">
+        <thead>
+          <tr>
+            <th>Calle</th>
+            <th>Número</th>
+            <th>Ciudad</th>
+            <th>Referencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ direccionEnvio.Calle }}</td>
+            <td>{{ direccionEnvio.Numero }}</td>
+            <td>{{ direccionEnvio.Ciudad }}</td>
+            <td>{{ direccionEnvio.Referencia }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="col-4 text-right">
-      <app-btn-navegacion [buttonText]="'Siguiente'" [routerLink]="'/medio-de-pago'"></app-btn-navegacion>
+  </div>
+  
+  <div class="row justify-content-between">
+    <div class="col btn-atras">
+      <button (click)="volverAlEnvio()" class="btn btn-nav">Atrás</button>
+    </div>
+    <div class="col btn-siguiente">
+      <button (click)="confirmarDatos()" class="btn btn-nav">Confirmar</button>
     </div>
   </div>
 </div>

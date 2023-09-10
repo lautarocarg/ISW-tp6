@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { SharedImagesDataService } from 'src/app/services/shared-images-data.service';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-image-upload',
@@ -7,8 +6,7 @@ import { SharedImagesDataService } from 'src/app/services/shared-images-data.ser
   styleUrls: ['./image-upload.component.css']
 })
 export class ImageUploadComponent {
-  @Input() buttonText: string = "";
-  constructor(private sharedDataService: SharedImagesDataService) {}
+  @Output() imagenesCargadas: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   //Nombres de las imagenes subidas
   uploadedFileNames: string[] = [];
@@ -18,7 +16,6 @@ export class ImageUploadComponent {
   onFileSelected(event: any): void {
     //Limpio el array de imagenes y pongo en false la bandera
     this.uploadedFileNames = []
-    this.sharedDataService.setImagenes([]);
     this.archivosSubidos = false
     //Obtengo los datos del evento (el archivo)
     const files: FileList = event.target.files;
@@ -37,8 +34,8 @@ export class ImageUploadComponent {
     }
   }
 
-  onImagesSelected(images: string[]) {
-    this.sharedDataService.setImagenes(images);
+  onImagesSelected(imagenes: string[]) {
+    this.imagenesCargadas.emit(imagenes);
   }
 
 }

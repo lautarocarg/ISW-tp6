@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Direccion } from 'src/app/models/direccion';
+import { Estados } from 'src/app/models/estados.enum';
+import { Pedido } from 'src/app/models/pedido';
 
 @Component({
   selector: 'app-resumen',
@@ -8,6 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./resumen.component.css']
 })
 export class ResumenComponent {
-  constructor(private router: Router) {}
+  @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
+  @Input() pedidos: Pedido[];
+  @Input() direccionEnvio: Direccion;
+  @Input() direccionPedido: Direccion;
+
+  confirmarDatos(){
+    this.cambioEstado.emit(Estados.Pago);
+  }
+
+  volverAlEnvio(){
+    this.cambioEstado.emit(Estados.Envio);
+  }
 
 }

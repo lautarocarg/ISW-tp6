@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Estados } from 'src/app/models/estados.enum';
 
 @Component({
   selector: 'app-entrega',
@@ -8,10 +9,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class EntregaComponent {
 
-  seleccionForma = 'loAntesPosible';
-  ngOnInit(): void {
+  @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
 
+  confirmarEntrega(){
+    this.cambioEstado.emit(Estados.Finalizado);
   }
+
+  volverAMedioDePago(){
+    this.cambioEstado.emit(Estados.Pago);
+  }
+
+  seleccionForma = 'loAntesPosible';
 
   submitted = false;
   fechaHoy = new Date();
