@@ -2,7 +2,7 @@
   <h3 class="titulo-plantilla text-dark">Fecha de entrega</h3>
   <hr />
 
-  <form name="FormTipoEntrega" class="container">
+  <form [formGroup]="FormTipoEntrega" name="FormTipoEntrega" class="container">
     <!-- campo FORMA DE ENTREGA -->
     <div class="form-group row">
       <label class="etiqueta-campo" for="formaEntrega">
@@ -13,18 +13,19 @@
         formControlName="Forma"
         name="formaEntrega"
         id="formaEntrega"
+        [(ngModel)]="tipoEntregaSeleccionada"
       >
         <option value="loAntesPosible">Lo antes posible</option>
-        <option value="fechaYhora">Elegir fecha y hora</option>
+        <option value="fechaHoraParticular">Elegir fecha y hora</option>
       </select>
     </div>
   </form>
 
   <!-- campo FECHA Y HORA -->
-  <form class="tarjeta">
+  <form [formGroup]="FormFechaHora">
     <div
-      class="container justify-content-center full-width"
-      *ngIf="seleccionForma == 'fechaYhora'"
+      class="container"
+      *ngIf="tipoEntregaSeleccionada == 'fechaHoraParticular'"
     >
       <div class="row form-group">
         <!--campo FECHA-->
@@ -38,8 +39,11 @@
             formControlName="Fecha"
             placeholder="DD/MM/AAAA"
           />
-          <div class="text-danger" *ngIf="errorDeRequerido('Fecha')">
+          <div class="text-danger" *ngIf="validarCampoRequerido('Fecha')">
             Dato Requerido.
+          </div>
+          <div class="text-danger" *ngIf="validarPatron('Fecha')">
+            Ingrese una fecha válidad (DD/MM/AAAA)
           </div>
         </div>
 
@@ -54,9 +58,15 @@
             formControlName="Hora"
             placeholder="HH:MM"
           />
-          <div class="text-danger" *ngIf="validezCampo('Hora')">
+          <div class="text-danger" *ngIf="validarCampoRequerido('Hora')">
             Dato Requerido.
           </div>
+          <div class="text-danger" *ngIf="validarPatron('Hora')">
+            Ingrese una hora válidad (HH:MM)
+          </div>
+        </div>
+        <div class="text-danger" *ngIf="!fechaValida">
+          Como máximo se puede pedir hasta una semana
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ export class MedioDePagoComponent{
   medioDePago: string = 'Efectivo';
   FormTipoEfectivo: FormGroup;
   FormTipoTarjeta: FormGroup;
-  mensajeMonto = '';
+  formularioEnviado = false;
 
   constructor(private formBuilder: FormBuilder){
     this.FormTipoEfectivo = this.formBuilder.group({
@@ -54,6 +54,7 @@ export class MedioDePagoComponent{
   }
 
   confirmarMedioDePago(){
+    this.formularioEnviado = true;
     if((this.medioDePago == 'Efectivo') && !this.FormTipoEfectivo.invalid){
       this.cambioEstado.emit(Estados.Entrega);
     }
@@ -80,29 +81,25 @@ export class MedioDePagoComponent{
     }
   }
 
-  validarRequerido(mensaje:String){
-
-  }
-
   validarCampoRequerido(campoAValidar:string){
     if(this.medioDePago === 'Efectivo'){
       let control = this.FormTipoEfectivo.get(campoAValidar);
-      return (control?.dirty || control?.touched) && control?.errors?.['required']
+      return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['required']
     }
     else{
       let control = this.FormTipoTarjeta.get(campoAValidar);
-    return (control?.dirty || control?.touched) && control?.errors?.['required']
+    return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['required']
     }
   }
 
   validarPatron(campoAValidar:string){
     if(this.medioDePago === 'Efectivo'){
       let control = this.FormTipoEfectivo.get(campoAValidar);
-      return (control?.dirty || control?.touched) && control?.errors?.['pattern']
+      return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['pattern']
     }
     else{
       let control = this.FormTipoTarjeta.get(campoAValidar);
-    return (control?.dirty || control?.touched) && control?.errors?.['pattern']
+    return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['pattern']
     }
   }
 

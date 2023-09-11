@@ -4,7 +4,7 @@
   <h6>Ingrese los productos que desea comprar</h6>
   <form [formGroup]="FormPedido" class="row g-2">
     <div class="col-4 align-self-start text-area">
-      
+
       <textarea class="form-control" id="descripcionPedido" rows="2" maxlength="1000"></textarea>
     </div>
     <div class="col-2 align-self-start me-auto">
@@ -43,6 +43,20 @@
               <label class="col-form-label" for="calle"> Calle<span class="text-danger">*</span>: </label>
               <input type="text" class="form-control" formControlName="Calle" placeholder="Calle" name="calle" id="calle">
               </div>
+              <div
+              class="text-danger"
+              *ngIf="validarCampoRequerido('Calle')"
+            >
+              Dato Requerido.
+            </div>
+            <div
+            class="text-danger"
+            *ngIf="
+            validarPatron('Calle')
+            "
+          >
+          Por favor, ingrese solo letras y espacios (Máximo 50 carácteres)
+          </div>
             </div>
 
           <!-- campo NUMERO -->
@@ -52,6 +66,20 @@
               <input type="number" class="form-control"
               formControlName="Numero"  placeholder="Numero" name="numero" id="numero" required>
             </div>
+            <div
+              class="text-danger"
+              *ngIf="validarCampoRequerido('Numero')"
+            >
+              Dato Requerido.
+            </div>
+            <div
+            class="text-danger"
+            *ngIf="
+            validarPatron('Numero')
+            "
+          >
+          Máximo 5
+          </div>
         </div>
       </div>
 

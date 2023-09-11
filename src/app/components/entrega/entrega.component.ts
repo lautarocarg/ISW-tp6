@@ -1,98 +1,117 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Estados } from 'src/app/models/estados.enum';
 
 @Component({
   selector: 'app-entrega',
   templateUrl: './entrega.component.html',
-  styleUrls: ['./entrega.component.css']
+  styleUrls: ['./entrega.component.css'],
 })
 export class EntregaComponent {
-
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
+  FormTipoEntrega: FormGroup;
+  FormFechaHora: FormGroup;
+  tipoEntregaSeleccionada = 'loAntesPosible';
+  formularioEnviado = false;
+  fechaValida = false;
 
-  confirmarEntrega(){
-    this.cambioEstado.emit(Estados.Finalizado);
+  constructor(private fb: FormBuilder) {
+    this.FormTipoEntrega = fb.group({
+      Forma: new FormControl(true, [Validators.required]),
+    });
+    this.FormFechaHora = fb.group({
+      Fecha: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(10),
+        Validators.minLength(10),
+        Validators.pattern(
+          '(0[1-9]|[12][0-9]|3[01])[-/](0[1-9]|1[012])[-/](20)[2-3][0-9]'
+        ),
+      ]),
+      Hora: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(5),
+        Validators.minLength(5),
+        Validators.pattern('(0[89]|1[0-9]|2[0-2])[-:]([0-5][0-9])'),
+      ]),
+    });
+  }
+  confirmarEntrega() {
+    this.validarFecha();
+    this.formularioEnviado = true;
+    if (
+      this.tipoEntregaSeleccionada == 'fechaHoraParticular' &&
+      this.fechaValida == true &&
+      !this.FormFechaHora.invalid
+    ) {
+      this.cambioEstado.emit(Estados.Finalizado);
+    }
+    return;
   }
 
-  volverAMedioDePago(){
+  volverAMedioDePago() {
     this.cambioEstado.emit(Estados.Pago);
   }
 
-  seleccionForma = 'loAntesPosible';
-
-  submitted = false;
-  fechaHoy = new Date();
-
-  parsearMes(mes:string){
-    if (parseInt(mes)>=10 && parseInt(mes)<=12){
-      return mes;
+  validarFecha(){
+    const fecha = this.FormFechaHora.get('Fecha')?.value;
+    const hora = this.FormFechaHora.get('Hora')?.value;
+    if(this.validarRangoFecha(fecha, hora) && this.formularioEnviado){
+      this.fechaValida = true;
     }
-    else{
-      return '0'+parseInt(mes).toString();
+    this.fechaValida = false;
+  }
+
+  validarRangoFecha(fecha:string, horaCargada:string){
+    const fechaActual = new Date();
+
+    const partesFecha = fecha.split('/');
+    const dia = parseInt(partesFecha[0], 10);
+    const mes = parseInt(partesFecha[1], 10) - 1;
+    const año = parseInt(partesFecha[2], 10);
+
+    const partesHora = horaCargada.split(':');
+    const hora = parseInt(partesHora[0],10);
+    const minutos = parseInt(partesHora[1],10);
+
+    const fechaIngresada = new Date(año, mes, dia, hora, minutos);
+
+
+    //Verficiar que si es sabado no sea mayor a las 23 horas
+    if(fechaIngresada.getDay() == 6 && fechaIngresada.getHours()>=23){
+      return false;
+    }
+
+    //Verificar que el tiempo no sea mayor a una semana
+    const diferencia = fechaIngresada.getTime() - fechaActual.getTime();
+    const unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
+
+    if (diferencia <= unaSemanaEnMilisegundos) {
+      return true;
+    } else {
+      return false;
     }
   }
-  parsearDia(dia:string){
-    if (parseInt(dia)>=10 && parseInt(dia)<=31){
-      return dia;
-    }
-    else{
-      return '0'+parseInt(dia).toString();
-    }
+
+
+  validarCampoRequerido(campoAValidar: string) {
+    let control = this.FormFechaHora.get(campoAValidar);
+    return (
+      (control?.dirty || control?.touched || this.formularioEnviado) &&
+      control?.errors?.['required']
+    );
   }
 
-  entraEnRango(fecha:string){
-    let mesI = this.parsearMes(fecha.slice(3,5));
-    let diaI = this.parsearDia(fecha.slice(0,2));
-
-    let fechaI =  parseInt(fecha.slice(6,10)+ mesI + diaI);
-    let hoy = parseInt(this.fechaHoy.getFullYear().toString()+this.parsearMes((this.fechaHoy.getMonth()+1).toString())+this.parsearDia(this.fechaHoy.getDate().toString()));
-
-    let diferenciaDias = fechaI - hoy;
-
-    return (diferenciaDias <= 5 && diferenciaDias >= 1);
+  validarPatron(campoAValidar: string) {
+    let control = this.FormFechaHora.get(campoAValidar);
+    return (
+      (control?.dirty || control?.touched || this.formularioEnviado) &&
+      control?.errors?.['pattern']
+    );
   }
-
-
-
-  //LÓGICA DE INTERFAZ
-  quiereFechaYHora(){
-
-  }
-
-  //VALIDACIONES
-
-  validezCampo(campo:string){
-
-  }
-  errorDePatron(campo:string){
-
-  }
-  errorDeRequerido(campo:string){
-  }
-
-  FormTipoEntrega = new FormGroup({
-    Forma: new FormControl(true, [Validators.required]),
-  })
-
-  FormFechaHora = new FormGroup({
-    Fecha: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(10),
-      Validators.minLength(10),
-      Validators.pattern(
-        '(0[1-9]|[12][0-9]|3[01])[-/](0[1-9]|1[012])[-/](20)[2-3][0-9]'
-      ),
-    ]),
-    Hora: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(5),
-      Validators.minLength(5),
-      Validators.pattern(
-        '(0[89]|1[0-9]|2[0-2])[-:]([0-5][0-9])'
-      )
-    ])
-  });
-
-
 }

@@ -16,7 +16,8 @@ export class PedidoComponent {
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
   @ViewChild(ImageUploadComponent) componenteHijo: ImageUploadComponent | undefined;
   FormPedido: FormGroup;
-  FormDireccionLocal: FormGroup; 
+  FormDireccionLocal: FormGroup;
+  formularioEnviado = false;
 
   constructor(
     private fb: FormBuilder
@@ -25,7 +26,7 @@ export class PedidoComponent {
     });
 
     this.FormDireccionLocal = this.fb.group({
-      Calle: new FormControl('', [Validators.required, Validators.pattern('[A-Z, a-z]{4,50}')]),
+      Calle: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ ]{4,50}')]),
       Numero: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{1,5}')]),
       Ciudad: new FormControl(true, [Validators.required]),
       Referencia: new FormControl('', [Validators.pattern('[A-Z, a-z, 0-9]{1,100}')])
@@ -62,21 +63,26 @@ export class PedidoComponent {
   }
 
   enviarFormulario() {
-    const Calle = this.FormDireccionLocal.get('Calle')?.value;
-    const Numero = this.FormDireccionLocal.get('Numero')?.value;
-    const Ciudad = this.FormDireccionLocal.get('Ciudad')?.value;
-    const Referencia = this.FormDireccionLocal.get('Referencia')?.value;
-    const direccion:Direccion = {
-      Calle,
-      Numero,
-      Ciudad,
-      Referencia
-    };
-    let pedidoYDireccion = new PedidoYDireccion();
-    pedidoYDireccion.pedido = this.Pedidos;
-    pedidoYDireccion.direccion = direccion;
-    this.pedidoCreado.emit(pedidoYDireccion);
-    this.cambioEstado.emit(Estados.Envio);
+    this.formularioEnviado = true;
+    if(!this.FormDireccionLocal.invalid){
+      const Calle = this.FormDireccionLocal.get('Calle')?.value;
+      const Numero = this.FormDireccionLocal.get('Numero')?.value;
+      const Ciudad = this.FormDireccionLocal.get('Ciudad')?.value;
+      const Referencia = this.FormDireccionLocal.get('Referencia')?.value;
+      const direccion:Direccion = {
+        Calle,
+        Numero,
+        Ciudad,
+        Referencia
+      };
+      let pedidoYDireccion = new PedidoYDireccion();
+      pedidoYDireccion.pedido = this.Pedidos;
+      pedidoYDireccion.direccion = direccion;
+      this.pedidoCreado.emit(pedidoYDireccion);
+      this.cambioEstado.emit(Estados.Envio);
+    }
+    return;
+
   }
 
   onImagenesCargadas(imagenes: string[]){
@@ -84,6 +90,18 @@ export class PedidoComponent {
     if (this.componenteHijo) {
       this.componenteHijo.archivosSubidos = true;
     }
+  }
+
+  validarCampoRequerido(campoAValidar:string){
+
+      let control = this.FormDireccionLocal.get(campoAValidar);
+      return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['required']
+
+  }
+
+  validarPatron(campoAValidar:string){
+      let control = this.FormDireccionLocal.get(campoAValidar);
+      return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['pattern']
   }
 
 }
