@@ -3,6 +3,7 @@ import { Estados } from 'src/app/models/estados.enum';
 import { Pedido } from 'src/app/models/pedido';
 import { Direccion } from 'src/app/models/direccion';
 import { PedidoYDireccion } from 'src/app/models/pedidoYDireccion';
+import { MedioDePago } from 'src/app/models/medio-de-pago';
 
 @Component({
   selector: 'app-layout',
@@ -10,12 +11,13 @@ import { PedidoYDireccion } from 'src/app/models/pedidoYDireccion';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
-  
+
   estado:Estados = Estados.Pedido;
   pedido:Pedido[];
   direccionPedido:Direccion;
   direccionEnvio:Direccion;
-  
+  medioDePago:MedioDePago;
+
   onPedidoCreado(pedidoYDireccion: PedidoYDireccion) {
     this.pedido = pedidoYDireccion.pedido;
     this.direccionPedido = pedidoYDireccion.direccion;

@@ -1,64 +1,143 @@
-import { Component , OnInit, Output, EventEmitter} from '@angular/core';
-import {FormGroup, FormControl, Validators, AbstractControl} from "@angular/forms";
+import { Component , Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators, AbstractControl, FormBuilder} from "@angular/forms";
 import { Estados } from 'src/app/models/estados.enum';
+import {MedioDePago} from '../../models/medio-de-pago'
+import { Pedido } from 'src/app/models/pedido';
 
 @Component({
   selector: 'app-medio-de-pago',
   templateUrl: './medio-de-pago.component.html',
   styleUrls: ['./medio-de-pago.component.css']
 })
-export class MedioDePagoComponent {
+export class MedioDePagoComponent{
 
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
+  @Output() formaDePago: EventEmitter<MedioDePago> = new EventEmitter<MedioDePago>();
 
+  medioDePago: string = 'Efectivo';
+  FormTipoEfectivo: FormGroup;
+  FormTipoTarjeta: FormGroup;
+  mensajeMonto = '';
+
+  constructor(private formBuilder: FormBuilder){
+    this.FormTipoEfectivo = this.formBuilder.group({
+        Monto: new FormControl('',[
+          Validators.pattern('[0-9]*'),
+          Validators.required,
+          Validators.min(1),
+          Validators.max(99999),
+        ])
+      }
+    );
+    this.FormTipoTarjeta = this.formBuilder.group({
+        NombreApellido: new FormControl('',[
+          Validators.required,
+          Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ\s ]+$')
+        ]),
+        NumeroTarjeta: new FormControl('', [
+          Validators.required,
+          Validators.pattern(
+            '[0-9]{16}'
+          )
+        ]),
+        Vencimiento: new FormControl('',[
+          Validators.required,
+          Validators.pattern(
+            '^(0[1-9]|1[0-2])\/(20[0-9][0-9])$'
+          ),
+        ]),
+        CodigoSeguridad: new FormControl('',[
+          Validators.required,
+          Validators.pattern('^[1-9][1-9][1-9]$')
+        ])
+    })
+  }
 
   confirmarMedioDePago(){
-    this.cambioEstado.emit(Estados.Entrega);
+    if((this.medioDePago == 'Efectivo') && !this.FormTipoEfectivo.invalid){
+      this.cambioEstado.emit(Estados.Entrega);
+    }
+    else if((this.medioDePago == 'Tarjeta') && !this.FormTipoTarjeta.invalid){
+      this.cambioEstado.emit(Estados.Entrega);
+    }
+
+    return;
   }
 
   volverAResumen(){
     this.cambioEstado.emit(Estados.Resumen);
   }
 
-  precioPedido: number = 1000; // Reemplaza 1000 con el precio real del pedido
-  medioDePago: string = 'Efectivo';
-  submitted = false;
-
-  @Output() estado = new EventEmitter<string>();
-  @Output() info = new EventEmitter<{ Vuelto: number }>();
-
   seleccionarMedioDePago(medioDePago: string){
     this.medioDePago = medioDePago;
   }
 
-  calcularVuelto(montoPago: number): number {
-    return montoPago - this.precioPedido;
+  validador(campoAValidar:string){
+    switch(campoAValidar){
+      case 'Monto':
+
+        break;
+    }
   }
 
-  siguiente(){
-    //Seleccionó efectivo y la formEfectivo es válida
+  validarRequerido(mensaje:String){
+
   }
 
-  volver(){
-    this.estado.emit('D');
+  validarCampoRequerido(campoAValidar:string){
+    if(this.medioDePago === 'Efectivo'){
+      let control = this.FormTipoEfectivo.get(campoAValidar);
+      return (control?.dirty || control?.touched) && control?.errors?.['required']
+    }
+    else{
+      let control = this.FormTipoTarjeta.get(campoAValidar);
+    return (control?.dirty || control?.touched) && control?.errors?.['required']
+    }
   }
 
-  //VALIDACIONES
+  validarPatron(campoAValidar:string){
+    if(this.medioDePago === 'Efectivo'){
+      let control = this.FormTipoEfectivo.get(campoAValidar);
+      return (control?.dirty || control?.touched) && control?.errors?.['pattern']
+    }
+    else{
+      let control = this.FormTipoTarjeta.get(campoAValidar);
+    return (control?.dirty || control?.touched) && control?.errors?.['pattern']
+    }
+  }
 
-  fechaDeHoy = new Date();
-  mesHoy = this.fechaDeHoy.getMonth();
-  anioHoy = this.fechaDeHoy.getFullYear();
+  validarNumeroTarjetaValido(){
+    let numeroTarjetaElement = this.FormTipoTarjeta.get('NumeroTarjeta');
+    let numeroTarjeta = numeroTarjetaElement?.value;
+    if(numeroTarjeta){
+      let tarjetaValida = this.luhnAlgorithm(numeroTarjeta)
+      let esVisa = numeroTarjeta.toString()[0] == '4';
+      return tarjetaValida && esVisa
+    }
 
+    return !(numeroTarjetaElement?.touched && numeroTarjetaElement?.dirty);
+  }
 
-  //Te chequea la tarjeta crack
-  luhnAlgorithm(value:string) {
+  validarFecha(){
+    let vencimientoElement = this.FormTipoTarjeta.get('Vencimiento');
+    let vencimiento = vencimientoElement?.value;
+    if(vencimiento){
+      let vencimientoValido = this.validateExpiry(vencimiento)
+      return vencimientoValido
+    }
+
+    return !(vencimientoElement?.touched && vencimientoElement?.dirty);
+
+  }
+
+  luhnAlgorithm(valorAVerificar:string) {
+        let value = valorAVerificar.toString()
     // accept only digits, dashes or spaces
         if (/[^0-9-\s]+/.test(value)) return false;
-
+        console.log(typeof value)
     // The Luhn Algorithm. It's so pretty.
         var nCheck = 0, nDigit = 0, bEven = false;
         value = value.replace(/\D/g, "");
-        console.log(value)
 
         for (var n = value.length - 1; n >= 0; n--) {
             var cDigit = value.charAt(n),
@@ -72,70 +151,44 @@ export class MedioDePagoComponent {
             bEven = !bEven;
         }
 
-        console.log((nCheck % 10) == 0)
-
         return (nCheck % 10) == 0;
   }
 
-  validezCampo(campo:string){
-    return "";
-
-  }
-  errorDePatron(campo:string){
-    return "";
-  }
-  errorDeRequerido(campo:string){
-
-  }
-
-
-  //PATRONES DE VALIDACION
-
-  FormTipoEfectivo = new FormGroup({
-    Monto: new FormControl('',[
-      Validators.pattern('[0-9]*'),
-      Validators.required,
-      Validators.min(1),
-      Validators.max(20000),
-    ])
-  });
-
-  FormTipoTarjeta = new FormGroup({
-    NombreApellido: new FormControl('',[
-      Validators.required,
-    ]),
-    NumeroTarjeta: new FormControl('', [
-      Validators.required,
-      Validators.pattern(
-        '[0-9]{16}'
-      )
-    ]),
-    Vencimiento: new FormControl('',[
-      Validators.required,
-      Validators.pattern(
-        '(0[1-9]|1[012])[-/][2-3][0-9]'
-      ),
-    ]),
-    CodigoSeguridad: new FormControl('',[
-      Validators.required,
-      Validators.maxLength(3),
-      Validators.minLength(3),
-    ])
-  });
-
   validateExpiry (input:any) {
     // ensure basic format is correct
-    if (input.match(/^(0\d|1[0-2])\/\d{2}$/)) {
+    if (input.match(/^(0[1-9]|1[0-2])\/(20[0-9][0-9])$/)) {
       const {0: month, 1: year} = input.split("/");
 
       // get midnight of first day of the next month
-      var correctYear = parseInt("20" + year);
+      var correctYear = parseInt(year);
       const expiry = new Date(correctYear, month);
       const current = new Date();
 
       return expiry.getTime() > current.getTime();
 
     } else return false;
+  }
+
+  enviarFormulario() {
+    const tipoDeMedioDePago = this.medioDePago;
+
+    const nombreApellido = this.FormTipoTarjeta.get('NombreApellido')?.value;
+    const numeroTarjeta = this.FormTipoTarjeta.get('NumeroTarjeta')?.value;
+    const fechaVencimiento = this.FormTipoTarjeta.get('Vencimiento')?.value;
+    const codigoSeguridad = this.FormTipoTarjeta.get('CodigoSeguridad')?.value;
+
+    const monto = this.FormTipoEfectivo.get('Monto')?.value;
+
+    const medioDePago: MedioDePago = {
+      tipoDeMedioDePago,
+      nombreApellido,
+      numeroTarjeta,
+      fechaVencimiento,
+      codigoSeguridad,
+      monto
+    }
+    this.formaDePago.emit(medioDePago);
+    this.cambioEstado.emit(Estados.Entrega);
   }
 
 }

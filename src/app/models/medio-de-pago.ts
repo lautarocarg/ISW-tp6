@@ -1,2 +1,8 @@
-export interface MedioDePago {
+export class MedioDePago {
+  tipoDeMedioDePago = '';
+  numeroTarjeta= '';
+  nombreApellido = '';
+  fechaVencimiento= '';
+  codigoSeguridad= '';
+  monto= '';
 }
