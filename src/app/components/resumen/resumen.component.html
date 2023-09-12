@@ -1,24 +1,32 @@
-<div class="container">
-  <h1>Resumen del Pedido</h1>
-  <hr>
+<div class="container container-resumen">
+  <h2 class="titulo-resumen">Resumen del Pedido</h2>
+  
 
   <h2>Tu Pedido</h2>
   <hr>
   <div class="row">
-    <div class="col-6">
+    <div class="col-5">
       <table class="tabla-pedidos">
         <thead>
           <tr>
             <th>Descripción</th>
             <th>Cantidad de Imágenes</th>
+            <th>Precio</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pedido of pedidos">
+          <tr *ngFor="let pedido of pedidos; let i = index">
             <td>{{ pedido.Descripcion }}</td>
             <td>{{ pedido.Imagenes.length }}</td>
+            <td>{{ pedido.Precio }}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td colspan="2">{{ calcularTotal() }}</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -26,7 +34,7 @@
   <h2>Dirección del Local</h2>
   <hr>
   <div class="row">
-    <div class="col-6">
+    <div class="col-5">
       <table class="tabla-pedidos">
         <thead>
           <tr>
@@ -51,7 +59,7 @@
   <h2>Dirección de Envío</h2>
   <hr>
   <div class="row">
-    <div class="col-6">
+    <div class="col-5">
       <table class="tabla-pedidos">
         <thead>
           <tr>
@@ -69,7 +77,18 @@
             <td>{{ direccionEnvio.Referencia }}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td>Costo</td>
+            <td colspan="2">{{ calcularTotal() }}</td>
+          </tr>
+        </tfoot>
       </table>
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <div class="col-2 align-self-end">
+      Total: 50000
     </div>
   </div>
   

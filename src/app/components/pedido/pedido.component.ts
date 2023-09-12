@@ -47,13 +47,15 @@ export class PedidoComponent {
     if(this.descripcion.trim() != ''){
       let nuevoPedido: Pedido = new Pedido();
       nuevoPedido.Descripcion = this.descripcion;
-      nuevoPedido.Imagenes = this.imagenes,
+      nuevoPedido.Imagenes = this.imagenes;
+      nuevoPedido.Precio = this.calcularPrecioPedido();
       this.Pedidos.push(nuevoPedido);
       nuevoPedido = new Pedido();
       this.flagTablaPedidos = false;
       this.actualizarImagenesCargadas();
     }
     this.imagenes = []
+    descripcionTextAreaHTML.value = ''
   }
   actualizarImagenesCargadas() {
     if (this.componenteHijo) {
@@ -82,7 +84,11 @@ export class PedidoComponent {
       this.cambioEstado.emit(Estados.Envio);
     }
     return;
-
+  }
+  
+  calcularPrecioPedido(): number{
+    const random = Math.random() * 100
+    return Math.round(random*(this.Pedidos.length+5)*10)
   }
 
   onImagenesCargadas(imagenes: string[]){
@@ -93,7 +99,6 @@ export class PedidoComponent {
   }
 
   validarCampoRequerido(campoAValidar:string){
-
       let control = this.FormDireccionLocal.get(campoAValidar);
       return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['required']
 

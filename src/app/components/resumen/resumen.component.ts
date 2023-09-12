@@ -9,10 +9,20 @@ import { Pedido } from 'src/app/models/pedido';
   styleUrls: ['./resumen.component.css']
 })
 export class ResumenComponent {
+
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
   @Input() pedidos: Pedido[];
   @Input() direccionEnvio: Direccion;
   @Input() direccionPedido: Direccion;
+
+  calcularTotal():number{
+    let total = 0;
+    for (let index = 0; index < this.pedidos.length; index++) {
+      const precio = this.pedidos[index].Precio;
+      total += precio;
+    }
+    return total
+  }
 
   confirmarDatos(){
     this.cambioEstado.emit(Estados.Pago);

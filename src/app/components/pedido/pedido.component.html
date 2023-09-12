@@ -4,17 +4,17 @@
   <h6>Ingrese los productos que desea comprar</h6>
   <form [formGroup]="FormPedido" class="row g-2">
     <div class="col-4 align-self-start text-area">
-
-      <textarea class="form-control" id="descripcionPedido" rows="2" maxlength="1000"></textarea>
-    </div>
-    <div class="col-2 align-self-start me-auto">
-      <button (click)="agregarPedido()" class="btn btn-primary"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
+        <textarea class="form-control" id="descripcionPedido" rows="2" maxlength="1000"></textarea>
     </div>
     <div class="col-3 align-self-start me-auto">
-      <app-image-upload (imagenesCargadas)="onImagenesCargadas($event)"></app-image-upload>
+        <app-image-upload (imagenesCargadas)="onImagenesCargadas($event)"></app-image-upload>
     </div>
-  </form>
-  <div class="row" [ngClass]="{'tabla-pedidos-mostrar': flagTablaPedidos === true}">
+    <div class="col-2 align-self-start me-auto">
+        <button (click)="agregarPedido()" class="btn btn-primary btn-block"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
+    </div>
+</form>
+
+  <div class="row g-2" [ngClass]="{'tabla-pedidos-mostrar': flagTablaPedidos === true}">
     <div class="col-4">
       <table class="tabla-pedidos">
         <thead>

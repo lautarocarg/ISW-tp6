@@ -3,5 +3,5 @@ import { Pedido } from './pedido';
 
 export class PedidoYDireccion {
     pedido: Pedido[];
-    direccion: Direccion;
+    direccion: Direccion
 }
