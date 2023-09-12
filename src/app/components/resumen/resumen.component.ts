@@ -14,14 +14,28 @@ export class ResumenComponent {
   @Input() pedidos: Pedido[];
   @Input() direccionEnvio: Direccion;
   @Input() direccionPedido: Direccion;
+  totalPedido: number
+  totalEnvio: number
 
-  calcularTotal():number{
+  calcularTotalPedido():number{
     let total = 0;
     for (let index = 0; index < this.pedidos.length; index++) {
       const precio = this.pedidos[index].Precio;
       total += precio;
     }
+    this.totalPedido = total
     return total
+  }
+
+  calcularCostoEnvio():number{
+    let total = 0
+    //logica del costo de envio
+    this.totalEnvio = total
+    return total
+  }
+
+  calcularTotal():number{
+    return this.totalEnvio + this.totalPedido
   }
 
   confirmarDatos(){
