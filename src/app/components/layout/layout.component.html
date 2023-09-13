@@ -11,10 +11,12 @@
 
     <app-direccion-envio *ngIf="estado === 2" (cambioEstado)="onCambioEstado($event)" (direccionEnvioCreada)="onDireccionEnvioCreada($event)"></app-direccion-envio>
 
-    <app-resumen [pedidos]="pedido" [direccionEnvio]="direccionEnvio" [direccionPedido]="direccionPedido" *ngIf="estado === 3" (cambioEstado)="onCambioEstado($event)"></app-resumen>
+    <app-resumen [pedidos]="pedido" [direccionEnvio]="direccionEnvio" [direccionPedido]="direccionPedido" *ngIf="estado === 3" (cambioEstado)="onCambioEstado($event)" (totalPedidoYEnvio)="onTotalCalculado($event)"></app-resumen>
 
-    <app-medio-de-pago *ngIf="estado === 4" (cambioEstado)="onCambioEstado($event)"></app-medio-de-pago>
+    <app-medio-de-pago *ngIf="estado === 4" (cambioEstado)="onCambioEstado($event)" [total]="totalPedido"></app-medio-de-pago>
 
     <app-entrega *ngIf="estado === 5" (cambioEstado)="onCambioEstado($event)"></app-entrega>
+
+    <app-pantalla-final *ngIf="estado === 6" (cambioEstado)="onCambioEstado($event)" ></app-pantalla-final>
   </div>
 </div>

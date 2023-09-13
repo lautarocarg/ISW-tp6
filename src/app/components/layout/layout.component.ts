@@ -17,6 +17,7 @@ export class LayoutComponent {
   direccionPedido:Direccion;
   direccionEnvio:Direccion;
   medioDePago:MedioDePago;
+  totalPedido: number;
 
   onPedidoCreado(pedidoYDireccion: PedidoYDireccion) {
     this.pedido = pedidoYDireccion.pedido;
@@ -32,6 +33,10 @@ export class LayoutComponent {
     console.log(this.direccionEnvio)
     console.log(this.pedido)
     console.log(this.direccionPedido)
+  }
+
+  onTotalCalculado(total: number){
+    this.totalPedido = total;
   }
 
 }

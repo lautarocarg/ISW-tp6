@@ -27,3 +27,12 @@
 h6{
     padding-top: 10px;
 }
+
+@media screen and (max-device-width: 991px) {
+  .container{
+    padding: 0;
+  }
+  .imagenes-btn, #fileInput, .custom-file-upload{
+    width: 100%;
+  }
+}

@@ -1,18 +1,18 @@
 <div class="container">
   <!--Listo-->
-  <div class="container text-center p-4">
+  <div class="container text-center">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-12 p-2">
         <button
-          class="col btn btn-primary"
+          class="btn btn-primary"
           (click)="seleccionarMedioDePago('Efectivo')"
         >
           Efectivo
         </button>
       </div>
-      <div class="col">
+      <div class="col-lg-6 col-md-12 p-2">
         <button
-          class="col btn btn-secondary"
+          class="btn btn-secondary"
           (click)="seleccionarMedioDePago('Tarjeta')"
         >
           Tarjeta de Crédito/Débito
@@ -22,7 +22,7 @@
   </div>
 
   <!-- Efectivo -->
-  <div class="container">
+  <div class="container p-4">
     <form
       [formGroup]="FormTipoEfectivo"
       name="FormPagoEfectivo"
@@ -37,13 +37,18 @@
           placeholder="Monto"
           name="Monto"
           id="Monto"
+          (ngModelChange)="calcularVuelto()"
         />
       </div>
+      <div class="vuelto" *ngIf="vuelto >= 0">Su vuelto es: {{ vuelto }}</div>
       <div class="text-danger" *ngIf="validarCampoRequerido('Monto')">
         Debe ingresar un monto.
       </div>
       <div class="text-danger" *ngIf="validarPatron('Monto')">
-        Solo se permiten núemeros.
+        No se permiten montos mayor a un millón.
+      </div>
+      <div class="text-danger" *ngIf="formularioEnviado && vuelto < 0">
+        El monto ingresado debe ser mayor o igual al total
       </div>
     </form>
 
@@ -53,7 +58,7 @@
       name="FormRegistroTarjeta"
       *ngIf="medioDePago == 'Tarjeta'"
     >
-      <div class="container text-left">
+      <div class="container overflow-hidden text-center">
         <!--campo NOMBRE Y APELLIDO-->
         <div class="row form-group">
           <label class="col-form-label" for="NombreApellido">
@@ -73,12 +78,9 @@
           >
             Dato Requerido.
           </div>
-          <div
-          class="text-danger"
-          *ngIf="validarPatron('NombreApellido')"
-        >
-         Por favor, ingrese solo letras y espacios
-        </div>
+          <div class="text-danger" *ngIf="validarPatron('NombreApellido')">
+            Por favor, ingrese solo letras y espacios
+          </div>
         </div>
         <!--campo NUMERO DE TARJETA-->
         <div class="row form-group">
@@ -98,32 +100,19 @@
             Dato Requerido.
           </div>
 
-          <div
-            class="text-danger"
-            *ngIf="
-            !validarNumeroTarjetaValido()
-            "
-          >
+          <div class="text-danger" *ngIf="!validarNumeroTarjetaValido()">
             Número de tarjeta inválido (Solo se permite Visa)
           </div>
 
-          <div
-            class="text-danger"
-            *ngIf="
-            validarPatron('NumeroTarjeta')
-            "
-          >
+          <div class="text-danger" *ngIf="validarPatron('NumeroTarjeta')">
             Por favor, ingrese 16 dígitos
           </div>
         </div>
 
-        <!--campo VENCIMIENTO y CVC-->
-        <div class="row form-group">
-          <div class="row full-width">
+          <div class="row full-width justify-content-between">
             <!--campo Vencimiento-->
-            <div class="col-sm-6">
+            <div class="col-lg-6 col-md-12">
               <label
-                class="etiqueta-campo col-form-label col-sm-12"
                 for="Vencimiento"
                 >Vencimiento <span class="text-danger">*</span></label
               >
@@ -131,9 +120,13 @@
                 type="text"
                 class="form-control input-lg"
                 formControlName="Vencimiento"
+                placeholder="MM/YYYY"
               />
 
-              <div class="text-danger" *ngIf="validarCampoRequerido('Vencimiento')">
+              <div
+                class="text-danger"
+                *ngIf="validarCampoRequerido('Vencimiento')"
+              >
                 Dato Requerido.
               </div>
               <div class="text-danger" *ngIf="!validarFecha()">
@@ -144,14 +137,14 @@
               </div>
             </div>
             <!--campo CVC-->
-            <div class="col-md-6">
-              <label class="etiqueta-campo col-form-label" for="CodigoSeguridad"
+            <div class="col-lg-6 col-md-12">
+              <label for="CodigoSeguridad"
                 >Codigo de Seguridad <span class="text-danger">*</span></label
               >
 
               <input
                 type="number"
-                class="form-control input-lg"
+                class="form-control"
                 formControlName="CodigoSeguridad"
               />
 
@@ -162,15 +155,11 @@
                 Dato Requerido.
               </div>
 
-              <div
-                class="text-danger"
-                *ngIf="validarPatron('CodigoSeguridad')"
-              >
+              <div class="text-danger" *ngIf="validarPatron('CodigoSeguridad')">
                 Solo se permiten 3 dígitos.
               </div>
             </div>
           </div>
-        </div>
       </div>
     </form>
   </div>

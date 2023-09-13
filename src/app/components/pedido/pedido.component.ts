@@ -11,7 +11,7 @@ import { Estados } from 'src/app/models/estados.enum';
   templateUrl: './pedido.component.html',
   styleUrls: ['./pedido.component.css']
 })
-export class PedidoComponent {
+export class PedidoComponent{
   @Output() pedidoCreado: EventEmitter<PedidoYDireccion> = new EventEmitter<PedidoYDireccion>();
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
   @ViewChild(ImageUploadComponent) componenteHijo: ImageUploadComponent | undefined;
@@ -26,9 +26,9 @@ export class PedidoComponent {
     });
 
     this.FormDireccionLocal = this.fb.group({
-      Calle: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ ]{4,50}')]),
+      Calle: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ., 0-9 ]{4,50}')]),
       Numero: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{1,5}')]),
-      Ciudad: new FormControl(true, [Validators.required]),
+      Ciudad: new FormControl(this.ItemCiudad[0].Nombre, [Validators.required]),
       Referencia: new FormControl('', [Validators.pattern('[A-Z, a-z, 0-9]{1,100}')])
     });
   }
@@ -39,12 +39,14 @@ export class PedidoComponent {
   Pedidos: Pedido[] = [];
   datosFormulario: any;
   imagenes: string[] = [];
+  descipcionCargada: boolean = true;
 
   agregarPedido() {
     let descripcionTextArea = document.getElementById('descripcionPedido');
     let descripcionTextAreaHTML = descripcionTextArea as HTMLTextAreaElement;
     this.descripcion = descripcionTextAreaHTML.value;
     if(this.descripcion.trim() != ''){
+      this.descipcionCargada = true;
       let nuevoPedido: Pedido = new Pedido();
       nuevoPedido.Descripcion = this.descripcion;
       nuevoPedido.Imagenes = this.imagenes;
@@ -53,6 +55,8 @@ export class PedidoComponent {
       nuevoPedido = new Pedido();
       this.flagTablaPedidos = false;
       this.actualizarImagenesCargadas();
+    }else{
+      this.descipcionCargada = false;
     }
     this.imagenes = []
     descripcionTextAreaHTML.value = ''
@@ -66,7 +70,7 @@ export class PedidoComponent {
 
   enviarFormulario() {
     this.formularioEnviado = true;
-    if(!this.FormDireccionLocal.invalid){
+    if(!this.FormDireccionLocal.invalid && !this.validarPedidoCargado()){
       const Calle = this.FormDireccionLocal.get('Calle')?.value;
       const Numero = this.FormDireccionLocal.get('Numero')?.value;
       const Ciudad = this.FormDireccionLocal.get('Ciudad')?.value;
@@ -85,7 +89,7 @@ export class PedidoComponent {
     }
     return;
   }
-  
+
   calcularPrecioPedido(): number{
     const random = Math.random() * 100
     return Math.round(random*(this.Pedidos.length+5)*10)
@@ -107,6 +111,27 @@ export class PedidoComponent {
   validarPatron(campoAValidar:string){
       let control = this.FormDireccionLocal.get(campoAValidar);
       return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['pattern']
+  }
+
+  validarPedidoCargado(){
+    return this.Pedidos.length == 0 && this.formularioEnviado
+  }
+
+  validarDescripcion(){
+
+  }
+
+  cargarDireccionConMapa(){
+    let calleControl = this.FormDireccionLocal.get('Calle');
+    let numeroControl = this.FormDireccionLocal.get('Numero');
+
+    calleControl?.setValue('Maestro M. Lopez');
+    numeroControl?.setValue('2700');
+
+    calleControl?.markAsDirty();
+    calleControl?.markAsTouched();
+    numeroControl?.markAsDirty();
+    numeroControl?.markAsTouched();
   }
 
 }

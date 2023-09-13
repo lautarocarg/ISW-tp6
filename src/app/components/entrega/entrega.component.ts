@@ -41,6 +41,7 @@ export class EntregaComponent {
       ]),
     });
   }
+
   confirmarEntrega() {
     this.validarFecha();
     this.formularioEnviado = true;
@@ -49,6 +50,9 @@ export class EntregaComponent {
       this.fechaValida == true &&
       !this.FormFechaHora.invalid
     ) {
+      this.cambioEstado.emit(Estados.Finalizado);
+    }
+    else if(this.tipoEntregaSeleccionada == 'loAntesPosible'){
       this.cambioEstado.emit(Estados.Finalizado);
     }
     return;
@@ -63,8 +67,9 @@ export class EntregaComponent {
     const hora = this.FormFechaHora.get('Hora')?.value;
     if(this.validarRangoFecha(fecha, hora) && this.formularioEnviado){
       this.fechaValida = true;
+    }else{
+      this.fechaValida = false;
     }
-    this.fechaValida = false;
   }
 
   validarRangoFecha(fecha:string, horaCargada:string){
@@ -81,12 +86,6 @@ export class EntregaComponent {
 
     const fechaIngresada = new Date(año, mes, dia, hora, minutos);
 
-
-    //Verficiar que si es sabado no sea mayor a las 23 horas
-    if(fechaIngresada.getDay() == 6 && fechaIngresada.getHours()>=23){
-      return false;
-    }
-
     //Verificar que el tiempo no sea mayor a una semana
     const diferencia = fechaIngresada.getTime() - fechaActual.getTime();
     const unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
@@ -94,6 +93,12 @@ export class EntregaComponent {
     if (diferencia <= unaSemanaEnMilisegundos) {
       return true;
     } else {
+      return false;
+    }
+
+
+    //Verficiar que si es sabado no sea mayor a las 23 horas
+    if(fechaIngresada.getDay() == 6 && fechaIngresada.getHours()>=23){
       return false;
     }
   }

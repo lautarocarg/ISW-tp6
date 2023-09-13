@@ -11,6 +11,7 @@ import { Pedido } from 'src/app/models/pedido';
 export class ResumenComponent {
 
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
+  @Output() totalPedidoYEnvio: EventEmitter<number> = new EventEmitter<number>();
   @Input() pedidos: Pedido[];
   @Input() direccionEnvio: Direccion;
   @Input() direccionPedido: Direccion;
@@ -28,14 +29,17 @@ export class ResumenComponent {
   }
 
   calcularCostoEnvio():number{
-    let total = 0
-    //logica del costo de envio
-    this.totalEnvio = total
+    let total = 0;
+    let random = Math.random() * 100;
+    total = Math.round(random * this.pedidos.length) + 500
+    this.totalEnvio = total;
     return total
   }
 
   calcularTotal():number{
-    return this.totalEnvio + this.totalPedido
+    const sumaTotalPedidoYEnvio = this.totalEnvio + this.totalPedido
+    this.totalPedidoYEnvio.emit(sumaTotalPedidoYEnvio)
+    return sumaTotalPedidoYEnvio;
   }
 
   confirmarDatos(){

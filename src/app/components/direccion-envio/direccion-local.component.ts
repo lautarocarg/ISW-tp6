@@ -17,9 +17,9 @@ export class DireccionEnvioComponent {
   constructor(
     private fb: FormBuilder) {
     this.FormDireccionEnvioPedido = this.fb.group({
-      Calle: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ ]{4,50}')]),
+      Calle: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ., 0-9 ]{4,50}')]),
       Numero: new FormControl(null, [Validators.required, Validators.pattern('[0-9]{1,5}')]),
-      Ciudad: new FormControl(true, [Validators.required]),
+      Ciudad: new FormControl(this.ItemCiudad[0].Nombre, [Validators.required]),
       Referencia: new FormControl('', [Validators.pattern('[A-Z, a-z, 0-9]{1,100}')])
     });
   }
@@ -45,6 +45,18 @@ export class DireccionEnvioComponent {
     return;
 
   }
+  cargarDireccionConMapa(){
+    let calleControl = this.FormDireccionEnvioPedido.get('Calle');
+    let numeroControl = this.FormDireccionEnvioPedido.get('Numero');
+
+    calleControl?.setValue('Maestro M. Lopez');
+    numeroControl?.setValue('2700');
+
+    calleControl?.markAsDirty();
+    calleControl?.markAsTouched();
+    numeroControl?.markAsDirty();
+    numeroControl?.markAsTouched();
+  }
 
   volverAlPedido(){
     this.cambioEstado.emit(Estados.Pedido);
@@ -54,7 +66,6 @@ export class DireccionEnvioComponent {
 
     let control = this.FormDireccionEnvioPedido.get(campoAValidar);
     return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['required']
-
 }
 
 validarPatron(campoAValidar:string){

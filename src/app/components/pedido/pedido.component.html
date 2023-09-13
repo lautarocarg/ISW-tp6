@@ -3,19 +3,28 @@
   <hr>
   <h6>Ingrese los productos que desea comprar</h6>
   <form [formGroup]="FormPedido" class="row g-2">
-    <div class="col-4 align-self-start text-area">
-        <textarea class="form-control" id="descripcionPedido" rows="2" maxlength="1000"></textarea>
+    <div class="col-lg-12 col-md-12 align-self-start text-area">
+        <textarea class="form-control" id="descripcionPedido" rows="1" maxlength="1000"></textarea>
     </div>
-    <div class="col-3 align-self-start me-auto">
-        <app-image-upload (imagenesCargadas)="onImagenesCargadas($event)"></app-image-upload>
+
+    <div class="text-danger" *ngIf="!descipcionCargada">
+          Debe ingresar una descripción
     </div>
-    <div class="col-2 align-self-start me-auto">
-        <button (click)="agregarPedido()" class="btn btn-primary btn-block"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
-    </div>
+
+    <div class="col-lg-6 col-md-12 align-self-start me-auto max-width">
+      <app-image-upload (imagenesCargadas)="onImagenesCargadas($event)"></app-image-upload>
+  </div>
+
+    <div class="col-lg-6 col-md-12 align-self-start me-auto max-width">
+      <button (click)="agregarPedido()" class="btn btn-primary btn-block" id="botonAgregarProducto"><img height="25vw" src="../../../assets/cart-plus-fill.svg"> Agregar producto</button>
+  </div>
+
+
+
 </form>
 
   <div class="row g-2" [ngClass]="{'tabla-pedidos-mostrar': flagTablaPedidos === true}">
-    <div class="col-4">
+    <div class="col-12">
       <table class="tabla-pedidos">
         <thead>
           <tr>
@@ -32,6 +41,12 @@
       </table>
     </div>
   </div>
+  <div
+  class="text-danger"
+  *ngIf="validarPedidoCargado()"
+>
+  Debe cargar al menos un producto
+</div>
   <h3>Dirección del local</h3>
   <hr>
   <form [formGroup]="FormDireccionLocal">
@@ -87,9 +102,9 @@
           <!-- campo CIUDAD -->
           <div class="form-group col-md-6">
               <label class="etiqueta-campo" for="ciudad"> Ciudad<span
-                  class="text-danger">*</span>: </label>
-              <select class="form-control" formControlName="Ciudad" name="ciudad" id="ciudad" >
-                  <option [value]="ciudad.Nombre" *ngFor="let ciudad of ItemCiudad">{{ciudad.Nombre}}</option>
+                  class="text-danger">*</span>:</label>
+              <select class="form-control" formControlName="Ciudad" name="ciudad" id="ciudad">
+                  <option [value]="ciudad.Nombre" *ngFor="let ciudad of ItemCiudad" [selected]="ciudad" [selected]="ciudad.Nombre === 'Cosquin'">{{ciudad.Nombre}}</option>
               </select>
           </div>
 
@@ -97,13 +112,13 @@
           <div class="form-group col-md-6">
               <label class="" for="referencia"> Referencia (Opcional) </label>
               <textarea class="form-control"
-              formControlName="Referencia"  placeholder="Referencia" name="referencia" id="referencia" rows="4" cols="50" resize="none"></textarea>
+              formControlName="Referencia"  placeholder="Referencia" name="referencia" id="referencia" rows="1" cols="50" resize="none"></textarea>
           </div>
       </div>
     </form>
   <div class="row mapa">
     <div class="col">
-      <button>MAPA</button>
+      <button (click)="cargarDireccionConMapa()"><img src="../../../assets/TEG2.svg" alt=""></button>
     </div>
   </div>
   <div class="row">

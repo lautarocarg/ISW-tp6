@@ -12,6 +12,7 @@ import { MedioDePagoComponent } from './components/medio-de-pago/medio-de-pago.c
 import { EntregaComponent } from './components/entrega/entrega.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PantallaFinalComponent } from './components/pantalla-final/pantalla-final.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ResumenComponent,
     MedioDePagoComponent,
     EntregaComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    PantallaFinalComponent
   ],
   imports: [
     BrowserModule,

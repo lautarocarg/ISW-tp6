@@ -14,10 +14,13 @@ export class MedioDePagoComponent{
   @Output() cambioEstado: EventEmitter<Estados> = new EventEmitter<Estados>();
   @Output() formaDePago: EventEmitter<MedioDePago> = new EventEmitter<MedioDePago>();
 
+  @Input() total: number;
+
   medioDePago: string = 'Efectivo';
   FormTipoEfectivo: FormGroup;
   FormTipoTarjeta: FormGroup;
   formularioEnviado = false;
+  vuelto: number;
 
   constructor(private formBuilder: FormBuilder){
     this.FormTipoEfectivo = this.formBuilder.group({
@@ -25,7 +28,7 @@ export class MedioDePagoComponent{
           Validators.pattern('[0-9]*'),
           Validators.required,
           Validators.min(1),
-          Validators.max(99999),
+          Validators.max(999999),
         ])
       }
     );
@@ -55,7 +58,7 @@ export class MedioDePagoComponent{
 
   confirmarMedioDePago(){
     this.formularioEnviado = true;
-    if((this.medioDePago == 'Efectivo') && !this.FormTipoEfectivo.invalid){
+    if((this.medioDePago == 'Efectivo') && !this.FormTipoEfectivo.invalid && this.vuelto >= 0){
       this.cambioEstado.emit(Estados.Entrega);
     }
     else if((this.medioDePago == 'Tarjeta') && !this.FormTipoTarjeta.invalid){
@@ -73,18 +76,15 @@ export class MedioDePagoComponent{
     this.medioDePago = medioDePago;
   }
 
-  validador(campoAValidar:string){
-    switch(campoAValidar){
-      case 'Monto':
-
-        break;
-    }
+  calcularVuelto(){
+    const campoMonto = this.FormTipoEfectivo.get('Monto');
+    this.vuelto = campoMonto?.value - this.total;
   }
 
   validarCampoRequerido(campoAValidar:string){
     if(this.medioDePago === 'Efectivo'){
       let control = this.FormTipoEfectivo.get(campoAValidar);
-      return (control?.dirty || control?.touched || this.formularioEnviado) && control?.errors?.['required']
+      return (control?.dirty || control?.touched || this.formularioEnviado) && (control?.errors?.['required'] || control?.errors?.['minlength'] || control?.errors?.['maxlength'])
     }
     else{
       let control = this.FormTipoTarjeta.get(campoAValidar);

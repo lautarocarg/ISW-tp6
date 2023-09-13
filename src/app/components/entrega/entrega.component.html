@@ -5,12 +5,12 @@
   <form [formGroup]="FormTipoEntrega" name="FormTipoEntrega" class="container">
     <!-- campo FORMA DE ENTREGA -->
     <div class="form-group row">
-      <label class="etiqueta-campo" for="formaEntrega">
+      <label for="formaEntrega">
         Forma de Entrega <span class="text-danger">*</span>:
       </label>
       <select
-        class="form-control"
         formControlName="Forma"
+        class="form-control"
         name="formaEntrega"
         id="formaEntrega"
         [(ngModel)]="tipoEntregaSeleccionada"
@@ -29,13 +29,13 @@
     >
       <div class="row form-group">
         <!--campo FECHA-->
-        <div class="col-md-6">
-          <label class="etiqueta-campo row" for="Fecha">
+        <div class="col-lg-6 col-md-12">
+          <label for="Fecha">
             Fecha de Entrega <span class="text-danger">*</span></label
           >
           <input
             type="text"
-            class="form-control row"
+            class="form-control"
             formControlName="Fecha"
             placeholder="DD/MM/AAAA"
           />
@@ -48,13 +48,13 @@
         </div>
 
         <!--campo HORA-->
-        <div class="col-md-6">
-          <label class="etiqueta-campo row" for="Hora"
+        <div class="col-lg-6 col-md-12">
+          <label for="Hora"
             >Hora de Entrega<span class="text-danger">*</span></label
           >
           <input
+            class="form-control"
             type="text"
-            class="form-control row"
             formControlName="Hora"
             placeholder="HH:MM"
           />
@@ -65,7 +65,7 @@
             Ingrese una hora válidad (HH:MM)
           </div>
         </div>
-        <div class="text-danger" *ngIf="!fechaValida">
+        <div class="text-danger" *ngIf="!fechaValida && formularioEnviado">
           Como máximo se puede pedir hasta una semana
         </div>
       </div>

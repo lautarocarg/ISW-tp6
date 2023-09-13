@@ -1,12 +1,12 @@
 <div class="container container-resumen">
   <h2 class="titulo-resumen">Resumen del Pedido</h2>
-  
+
 
   <h2>Tu Pedido</h2>
   <hr>
-  <div class="row">
-    <div class="col-5">
-      <table class="tabla-pedidos">
+  <div class="row g-2">
+    <div class="col-12">
+      <table class="tabla-pedidos tabla-resumen">
         <thead>
           <tr>
             <th>Descripción</th>
@@ -33,9 +33,9 @@
 
   <h2>Dirección del Local</h2>
   <hr>
-  <div class="row">
-    <div class="col-5">
-      <table class="tabla-pedidos">
+  <div class="row g-2">
+    <div class="col-12">
+      <table class="tabla-pedidos tabla-resumen">
         <thead>
           <tr>
             <th>Calle</th>
@@ -58,9 +58,9 @@
 
   <h2>Dirección de Envío</h2>
   <hr>
-  <div class="row">
-    <div class="col-5">
-      <table class="tabla-pedidos">
+  <div class="row g-2">
+    <div class="col-12">
+      <table class="tabla-pedidos tabla-resumen">
         <thead>
           <tr>
             <th>Calle</th>
@@ -91,7 +91,7 @@
       Total: {{ calcularTotal() }}
     </div>
   </div>
-  
+
   <div class="row justify-content-between">
     <div class="col btn-atras">
       <button (click)="volverAlEnvio()" class="btn btn-nav">Atrás</button>

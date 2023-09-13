@@ -56,7 +56,7 @@
               <label class="etiqueta-campo" for="ciudad"> Ciudad<span
                   class="text-danger">*</span>: </label>
               <select class="form-control" formControlName="Ciudad" name="ciudad" id="ciudad" >
-                  <option [value]="ciudad.Nombre" *ngFor="let ciudad of ItemCiudad">{{ciudad.Nombre}}</option>
+                  <option [value]="ciudad.Nombre" *ngFor="let ciudad of ItemCiudad" [selected]="ciudad" [selected]="ciudad.Nombre === 'Cosquin'">{{ciudad.Nombre}}</option>
               </select>
           </div>
 
@@ -64,13 +64,13 @@
           <div class="form-group col-md-6">
               <label class="" for="referencia"> Referencia (Opcional) </label>
               <textarea class="form-control"
-              formControlName="Referencia"  placeholder="Referencia" name="referencia" id="referencia" rows="4" cols="50" resize="none"></textarea>
+              formControlName="Referencia"  placeholder="Referencia" name="referencia" id="referencia" rows="1" cols="50" resize="none"></textarea>
           </div>
       </div>
     </form>
-    <div class="row mapa" >
+    <div class="row mapa">
       <div class="col">
-        <button>MAPA</button>
+        <button (click)="cargarDireccionConMapa()"><img src="../../../assets/TEG2.svg" alt=""></button>
       </div>
     </div>
 
