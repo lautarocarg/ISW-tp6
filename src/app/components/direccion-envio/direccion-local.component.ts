@@ -49,8 +49,8 @@ export class DireccionEnvioComponent {
     let calleControl = this.FormDireccionEnvioPedido.get('Calle');
     let numeroControl = this.FormDireccionEnvioPedido.get('Numero');
 
-    calleControl?.setValue('Maestro M. Lopez');
-    numeroControl?.setValue('2700');
+    calleControl?.setValue('25 de Mayo');
+    numeroControl?.setValue('21');
 
     calleControl?.markAsDirty();
     calleControl?.markAsTouched();
