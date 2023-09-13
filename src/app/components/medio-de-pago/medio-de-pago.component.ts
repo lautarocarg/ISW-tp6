@@ -25,10 +25,8 @@ export class MedioDePagoComponent{
   constructor(private formBuilder: FormBuilder){
     this.FormTipoEfectivo = this.formBuilder.group({
         Monto: new FormControl('',[
-          Validators.pattern('[0-9]*'),
-          Validators.required,
-          Validators.min(1),
-          Validators.max(999999),
+          Validators.pattern('[0-9]{1,6}'),
+          Validators.required
         ])
       }
     );
@@ -84,7 +82,7 @@ export class MedioDePagoComponent{
   validarCampoRequerido(campoAValidar:string){
     if(this.medioDePago === 'Efectivo'){
       let control = this.FormTipoEfectivo.get(campoAValidar);
-      return (control?.dirty || control?.touched || this.formularioEnviado) && (control?.errors?.['required'] || control?.errors?.['minlength'] || control?.errors?.['maxlength'])
+      return (control?.dirty || control?.touched || this.formularioEnviado) && (control?.errors?.['required'])
     }
     else{
       let control = this.FormTipoTarjeta.get(campoAValidar);

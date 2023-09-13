@@ -5,6 +5,7 @@
       <div class="col-lg-6 col-md-12 p-2">
         <button
           class="btn btn-primary"
+          id="botonEfectivo"
           (click)="seleccionarMedioDePago('Efectivo')"
         >
           Efectivo
@@ -13,6 +14,7 @@
       <div class="col-lg-6 col-md-12 p-2">
         <button
           class="btn btn-secondary"
+          id="botonTarjeta"
           (click)="seleccionarMedioDePago('Tarjeta')"
         >
           Tarjeta de Crédito/Débito
@@ -111,7 +113,7 @@
 
           <div class="row full-width justify-content-between">
             <!--campo Vencimiento-->
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12 pl-0" id="vencimiento">
               <label
                 for="Vencimiento"
                 >Vencimiento <span class="text-danger">*</span></label
@@ -137,7 +139,7 @@
               </div>
             </div>
             <!--campo CVC-->
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-6 col-md-12" id="cvc">
               <label for="CodigoSeguridad"
                 >Codigo de Seguridad <span class="text-danger">*</span></label
               >

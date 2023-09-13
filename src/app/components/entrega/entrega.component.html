@@ -29,7 +29,7 @@
     >
       <div class="row form-group">
         <!--campo FECHA-->
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12" id="fecha">
           <label for="Fecha">
             Fecha de Entrega <span class="text-danger">*</span></label
           >
@@ -43,12 +43,12 @@
             Dato Requerido.
           </div>
           <div class="text-danger" *ngIf="validarPatron('Fecha')">
-            Ingrese una fecha válidad (DD/MM/AAAA)
+            Ingrese una fecha válida (DD/MM/AAAA)
           </div>
         </div>
 
         <!--campo HORA-->
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12" id="hora">
           <label for="Hora"
             >Hora de Entrega<span class="text-danger">*</span></label
           >

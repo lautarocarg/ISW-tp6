@@ -72,7 +72,7 @@ export class EntregaComponent {
     }
   }
 
-  validarRangoFecha(fecha:string, horaCargada:string){
+  validarRangoFecha(fecha:string, horaCargada:string):boolean{
     const fechaActual = new Date();
 
     const partesFecha = fecha.split('/');
@@ -86,21 +86,26 @@ export class EntregaComponent {
 
     const fechaIngresada = new Date(año, mes, dia, hora, minutos);
 
+    if(fechaIngresada<fechaActual){
+      return false;
+    }
+
+
     //Verificar que el tiempo no sea mayor a una semana
     const diferencia = fechaIngresada.getTime() - fechaActual.getTime();
     const unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
 
     if (diferencia <= unaSemanaEnMilisegundos) {
+        //Verficiar que si es sabado no sea mayor a las 11 horas
+        if(
+          (fechaIngresada.getDay() == 6 && fechaIngresada.getHours()>=11) ||
+          (fechaIngresada.getDay() == 0 )){
+          return false;
+        }
       return true;
-    } else {
-      return false;
     }
 
-
-    //Verficiar que si es sabado no sea mayor a las 23 horas
-    if(fechaIngresada.getDay() == 6 && fechaIngresada.getHours()>=23){
-      return false;
-    }
+    return true;
   }
 
 

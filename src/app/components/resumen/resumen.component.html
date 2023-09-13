@@ -18,13 +18,13 @@
           <tr *ngFor="let pedido of pedidos; let i = index">
             <td>{{ pedido.Descripcion }}</td>
             <td>{{ pedido.Imagenes.length }}</td>
-            <td>{{ pedido.Precio }}</td>
+            <td>${{ pedido.Precio }}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td>Total</td>
-            <td colspan="2">{{ calcularTotalPedido() }}</td>
+            <td colspan="2">Total</td>
+            <td>${{ calcularTotalPedido() }}</td>
           </tr>
         </tfoot>
       </table>
@@ -80,7 +80,7 @@
         <tfoot>
           <tr>
             <td>Costo</td>
-            <td colspan="3">{{ calcularCostoEnvio() }}</td>
+            <td colspan="3">${{ calcularCostoEnvio() }}</td>
           </tr>
         </tfoot>
       </table>
@@ -88,7 +88,7 @@
   </div>
   <div class="row">
     <div class="col total">
-      Total: {{ calcularTotal() }}
+      Total: ${{ calcularTotal() }}
     </div>
   </div>
 
