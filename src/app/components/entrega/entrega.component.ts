@@ -73,27 +73,26 @@ export class EntregaComponent {
   }
 
   validarRangoFecha(fecha:string, horaCargada:string):boolean{
-    const fechaActual = new Date();
+    let fechaActual = new Date();
 
-    const partesFecha = fecha.split('/');
-    const dia = parseInt(partesFecha[0], 10);
-    const mes = parseInt(partesFecha[1], 10) - 1;
-    const año = parseInt(partesFecha[2], 10);
+    let partesFecha = fecha.split('/');
+    let dia = parseInt(partesFecha[0], 10);
+    let mes = parseInt(partesFecha[1], 10) - 1;
+    let año = parseInt(partesFecha[2], 10);
 
-    const partesHora = horaCargada.split(':');
-    const hora = parseInt(partesHora[0],10);
-    const minutos = parseInt(partesHora[1],10);
+    let partesHora = horaCargada.split(':');
+    let hora = parseInt(partesHora[0],10);
+    let minutos = parseInt(partesHora[1],10);
 
-    const fechaIngresada = new Date(año, mes, dia, hora, minutos);
+    let fechaIngresada = new Date(año, mes, dia, hora, minutos);
 
     if(fechaIngresada<fechaActual){
       return false;
     }
 
-
     //Verificar que el tiempo no sea mayor a una semana
-    const diferencia = fechaIngresada.getTime() - fechaActual.getTime();
-    const unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
+    let diferencia = fechaIngresada.getTime() - fechaActual.getTime();
+    let unaSemanaEnMilisegundos = 7 * 24 * 60 * 60 * 1000;
 
     if (diferencia <= unaSemanaEnMilisegundos) {
         //Verficiar que si es sabado no sea mayor a las 11 horas
@@ -104,8 +103,10 @@ export class EntregaComponent {
         }
       return true;
     }
+    else{
+      return false;
+    }
 
-    return true;
   }
 
 
