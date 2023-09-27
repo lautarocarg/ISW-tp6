@@ -11,6 +11,11 @@
     cursor: pointer;
     border-radius: 5px;
 }
+.custom-file-upload:hover {
+    background-color: #006989;
+    border-color: #006989;
+}
+
 .custom-file-upload:active {
     background-color: #006989; /* Cambia el color al hacer clic */
 }
@@ -21,4 +26,13 @@
 
 h6{
     padding-top: 10px;
+}
+
+@media screen and (max-device-width: 991px) {
+  .container{
+    padding: 0;
+  }
+  .imagenes-btn, #fileInput, .custom-file-upload{
+    width: 100%;
+  }
 }

@@ -1,25 +1,14 @@
-h3{
-    text-align: left;
-    padding: 20px 0 0 0;
+.titulo-resumen{
+    /*text-decoration: underline;*/
+    text-align: center;
 }
-h2{
-    text-align: left;
-    padding: 20px 0 0 0;
-}
-h6{
-    text-align: left;
-}
-
-.btn-primary{
-    background-color: #01A7C2;
-    border-color: #01A7C2;
-    color: #fff;
-}
-.btn-primary:active{
-    background-color: #006989;
-    border-color: #006989;
+.total{
+    text-align: right;
+    padding-bottom: 10px;
+    margin-right: 10px;
+    font-size: 3rem;
 }
 
-.text-area{
-    text-align: left;
+.tabla-pedidos{
+  width: 100%;
 }
