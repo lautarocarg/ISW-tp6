@@ -25,7 +25,7 @@ export class MedioDePagoComponent{
   constructor(private formBuilder: FormBuilder){
     this.FormTipoEfectivo = this.formBuilder.group({
         Monto: new FormControl('',[
-          Validators.pattern('[0-9]{1,6}'),
+          Validators.pattern('[0-9,.]{1,6}'),
           Validators.required
         ])
       }
